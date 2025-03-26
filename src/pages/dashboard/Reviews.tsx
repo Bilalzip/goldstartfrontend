@@ -24,6 +24,8 @@ interface Review {
 const Reviews = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  console.log("I can see you")
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -103,7 +105,7 @@ const Reviews = () => {
             </div>
           </CardContent>
         </Card>
-
+        
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Positive Reviews</CardTitle>
