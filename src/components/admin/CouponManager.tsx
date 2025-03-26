@@ -35,7 +35,7 @@ export default function CouponManager() {
 
   const fetchCoupons = async () => {
     try {
-      const response = await fetch('http://localhost:3001/auth/coupons/list', {
+      const response = await fetch('https://goldstarserver-xeqt.onrender.com/auth/coupons/list', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -50,7 +50,7 @@ export default function CouponManager() {
   const createCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/auth/coupons/create', {
+      const response = await fetch('https://goldstarserver-xeqt.onrender.com/auth/coupons/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export default function CouponManager() {
 
   const deactivateCoupon = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:3001/auth/coupons/${id}/deactivate`, {
+      const response = await fetch(`https://goldstarserver-xeqt.onrender.com/auth/coupons/${id}/deactivate`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
