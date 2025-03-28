@@ -50,15 +50,10 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   asChild 
-                  className="bg-brand-600 hover:bg-brand-700 transition-colors relative"
+                  className="bg-brand-600 hover:bg-brand-700 transition-colors"
                 >
                   <Link to="/signup" className="flex items-center gap-2">
-                    <div className="flex flex-col items-start">
-                      <span className="text-brand-200 line-through text-xs">Regular $400/month</span>
-                      <span className="flex items-center gap-2">
-                        Get Started - $349/month
-                      </span>
-                    </div>
+                    Get Started - $300/month
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>

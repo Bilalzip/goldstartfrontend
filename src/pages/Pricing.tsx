@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
@@ -53,7 +52,12 @@ const Pricing = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-4xl mx-auto"
         >
-          <Card className="overflow-hidden border-2 border-brand-200 shadow-xl">
+          <Card className="overflow-hidden border-2 border-brand-200 shadow-xl relative">
+            {/* Add a "Special Offer" banner */}
+            <div className="absolute top-5 right-5 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold animate-pulse">
+              Save $50 Today!
+            </div>
+
             <div className="bg-brand-600 text-white py-6 px-8 text-center">
               <h2 className="text-2xl md:text-3xl font-bold">Review Management Service</h2>
               <p className="text-white/80 mt-2">Everything you need to boost your online reputation</p>
@@ -62,9 +66,16 @@ const Pricing = () => {
             <div className="p-8 md:p-12">
               <div className="flex justify-center mb-8">
                 <div className="text-center">
-                  <span className="text-5xl font-bold">$399</span>
-                  <span className="text-xl text-muted-foreground">/month</span>
+                  <div className="mb-2">
+                    <span className="text-2xl text-gray-400 line-through">$399</span>
+                    <span className="ml-2 text-red-500 font-semibold">Limited Time Offer</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-5xl font-bold text-brand-600">$349</span>
+                    <span className="text-xl text-muted-foreground">/month</span>
+                  </div>
                   <p className="text-muted-foreground mt-2">No contracts, cancel anytime</p>
+                  <p className="text-sm text-red-500 font-medium mt-1">*Offer ends soon</p>
                 </div>
               </div>
               
@@ -87,14 +98,23 @@ const Pricing = () => {
               </div>
               
               <div className="text-center">
-                <Button size="lg" className="w-full md:w-auto px-12" asChild>
+                <Button 
+                  size="lg" 
+                  className="w-full md:w-auto px-12 bg-brand-600 hover:bg-brand-700 transition-colors" 
+                  asChild
+                >
                   <Link to="/signup">
-                    Start Now – Pay $399
+                    Start Now – Only $349/month
                   </Link>
                 </Button>
-                <p className="text-sm text-muted-foreground mt-3">
-                  14-day satisfaction guarantee or your money back.
-                </p>
+                <div className="mt-3 space-y-1">
+                  <p className="text-sm text-muted-foreground">
+                    14-day satisfaction guarantee or your money back
+                  </p>
+                  <p className="text-sm text-red-500 font-medium">
+                    Save $50 when you sign up today!
+                  </p>
+                </div>
               </div>
             </div>
           </Card>

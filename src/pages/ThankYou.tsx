@@ -46,21 +46,13 @@ const ThankYou = () => {
               </AnimatedSection>
 
             
-
-              <AnimatedSection className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4" delay={0.6}>
-      
-                <Button variant="outline" asChild>
-                  <Link to="/">
-                    Return to Homepage
-                  </Link>
-                </Button>
-              </AnimatedSection>
+       
 
               <AnimatedSection className="mt-8 text-sm text-gray-500" delay={0.7}>
                 <p>
                   Need help? Contact our support team at{" "}
-                  <a href="mailto:support@reputationrocket.com" className="text-brand-600 hover:underline">
-                    support@reputationrocket.com
+                  <a href="mailto:support@thegoldstar.ca" className="text-brand-600 hover:underline">
+                    support@support@thegoldstar.ca
                   </a>
                 </p>
               </AnimatedSection>
