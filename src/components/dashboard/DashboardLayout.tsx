@@ -33,32 +33,27 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title }) =>
   const handleLogout = async () => {
     await logout();
   };
-
-  // Create navigation items based on user role
+  
   const getNavigationItems = () => {
-    const baseItems = [
-      { name: 'Dashboard', href: '/dashboard', icon: Home },
-      { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
-      { name: 'QR Codes', href: '/dashboard/qr-code', icon: QrCode },
-    ];
-    
-    // Add Referrals for salespeople
     if (user?.isSalesperson) {
-      baseItems.push({ name: 'Referrals', href: '/dashboard/referrals', icon: Users });
+      // For salesperson, show a single Dashboard item pointing to referrals
+      return [
+        { name: 'Dashboard', href: '/dashboard/referrals', icon: Users },
+        { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+        ...(user?.is_admin ? [{ name: 'Admin', href: '/admin', icon: User2Icon }] : []),
+      ];
+    } else {
+      // For non-salesperson users, include all items
+      return [
+        { name: 'Dashboard', href: '/dashboard', icon: Home },
+        { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
+        { name: 'QR Codes', href: '/dashboard/qr-code', icon: QrCode },
+        { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+        ...(user?.is_admin ? [{ name: 'Admin', href: '/admin', icon: User2Icon }] : []),
+      ];
     }
-
-    console.log(user)
-
-    // Add Settings for everyone
-    baseItems.push({ name: 'Settings', href: '/dashboard/settings', icon: Settings });
-
-    // Add Admin link only for admins
-    if (user?.is_admin) {
-      baseItems.push({ name: 'Admin', href: '/admin', icon: User2Icon });
-    }
-    
-    return baseItems;
   };
+  
 
   // If we're on an admin route but user is not admin, redirect to dashboard
   if (location.pathname.startsWith('/admin') && !user?.is_admin) {

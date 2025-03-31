@@ -71,13 +71,13 @@ const SignUp = () => {
       localStorage.setItem('token', result.token);
       console.log(JSON.stringify(result.user))
       toast.success("Account created successfully!");
-      
-     
+      if(formData.isSalesperson){
+        navigate("/dashboard");
+      } else {
         navigate("/onboarding");
-      
-    
+      }
     } catch (error: any) {
-      toast.error(error?.message || "Signup failed. Please try again.");
+      toast.error(error?.message);
     } finally {
       setIsSubmitting(false);
     }

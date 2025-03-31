@@ -13,18 +13,22 @@ const OnboardingRoute: React.FC<OnboardingRouteProps> = ({ children }) => {
     console.log("🚨 Redirecting to login...");
     return <Navigate to="/login" replace />;
   }
-
+  
   // If no user data or not authenticated, redirect to login
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-
+  if(user.isSalesperson){
+    return <Navigate to="/dashboard/referrals" replace />;
+  }
+  
   // If onboarding is completed, redirect to payment
   if (user.onboarding_completed) {
     console.log("✅ Onboarding completed → Redirecting to /payment");
     return <Navigate to="/dashboard/payment" replace />;
   }
 
+  
   // If not completed onboarding, show onboarding page
   console.log("🟢 Rendering Onboarding Page");
   return <>{children}</>;

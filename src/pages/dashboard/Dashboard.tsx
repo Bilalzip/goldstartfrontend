@@ -36,24 +36,25 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
-
   useEffect(() => {
-    // If we're authenticated but don't have user data, try to restore from localStorage
     if (isAuthenticated && !user) {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         dispatch(setUser(JSON.parse(storedUser)));
       }
     }
-  }, [isAuthenticated, user]);
-
-  // Add console.log to debug
-  console.log('Auth State:', { user, isAuthenticated });
-  console.log('LocalStorage:', {
-    user: localStorage.getItem('user'),
-    token: localStorage.getItem('token')
-  });
-
+  }, [isAuthenticated, user, dispatch]);
+  
+  useEffect(() => {
+    if (user) {
+      console.log("User subscriptionStatus:", user.subscriptionStatus);
+      if (user.subscriptionStatus === 'pending') {
+        toast.success("Subscribe to continue using the app.");
+      }
+    }
+  }, [user]);
+  
+  // Fetch dashboard statistics
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -66,7 +67,6 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-    
     fetchStats();
   }, []);
 
@@ -196,7 +196,6 @@ const Dashboard = () => {
   );
 };
 
-// Only define ActionCard since it's not imported
 interface ActionCardProps {
   title: string;
   description: string;

@@ -14,31 +14,30 @@ import Reviews from "./pages/dashboard/Reviews";
 import QrCode from "./pages/dashboard/QrCode";
 import Settings from "./pages/dashboard/Settings";
 import SalespersonDashboard from "./pages/salesperson/Dashboard";
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import Onboarding from './pages/Onboarding';
-import OnboardingGuard from './components/OnboardingGuard';
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import Onboarding from "./pages/Onboarding";
+import OnboardingGuard from "./components/OnboardingGuard";
 import Review from "./pages/Review";
 import Survey from "./pages/Survey";
-import OnboardingRoute from '@/components/OnboardingRoute';
+import OnboardingRoute from "@/components/OnboardingRoute";
 import ReferralDashboard from "./pages/dashboard/ReferralDashboard";
-import ReferralRedirect from '@/components/ReferralRedirect';
 import Payment from "./pages/dashboard/Payment";
-import VerifyEmail from '@/pages/VerifyEmail';
+import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/admin/Dashboard";
 import BusinessDetails from "./components/admin/BusinessDetails";
 import AdminRoute from "./components/auth/AdminRoute";
-import BusinessList from '@/components/admin/BusinessList';
-import SalespeopleList from '@/components/admin/SalespeopleList';
-import FinancialOverview from '@/components/admin/FinancialOverview';
-import AdminLayout from '@/components/admin/AdminLayout';
-import CouponManager from '@/components/admin/CouponManager';
-
-
+import BusinessList from "@/components/admin/BusinessList";
+import SalespeopleList from "@/components/admin/SalespeopleList";
+import FinancialOverview from "@/components/admin/FinancialOverview";
+import AdminLayout from "@/components/admin/AdminLayout";
+import CouponManager from "@/components/admin/CouponManager";
+import NonSalespersonGuard from "@/components/NonSalespersonGuard";
+import SubscriptionGuard from "@/components/SubscriptionGuard";
 
 const queryClient = new QueryClient();
 
@@ -56,45 +55,91 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/onboarding" element={
-              <ProtectedRoute>
-                <OnboardingRoute>
-                  <Onboarding />
-                </OnboardingRoute>
-              </ProtectedRoute>
-            } />
-            <Route path="/dashboard/*" element={
-              <ProtectedRoute>
-                <OnboardingGuard>
-                  <Routes>
-                    <Route index element={<Dashboard />} />
-                    <Route path="payment" element={<Payment />} />
-                    <Route path="reviews" element={<Reviews />} />
-                    <Route path="qr-code" element={<QrCode />} />
-                    <Route path="settings" element={<Settings />} />
-                    <Route path="referrals" element={
-                      <OnboardingGuard>
-                        {({ user }) => user?.isSalesperson ? (
-                          <ReferralDashboard />
-                        ) : (
-                          <Navigate to="/dashboard" replace />
-                        )}
-                      </OnboardingGuard>
-                    } />
-                  </Routes>
-                </OnboardingGuard>
-              </ProtectedRoute>
-            } />
+            <Route
+              path="/onboarding"
+              element={
+                <ProtectedRoute>
+                  <OnboardingRoute>
+                    <Onboarding />
+                  </OnboardingRoute>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/*"
+              element={
+                <ProtectedRoute>
+                  <OnboardingGuard>
+                    <Routes>
+                      {/* Wrap the main dashboard page with NonSalespersonGuard */}
+                      <Route
+                        index
+                        element={
+                          <NonSalespersonGuard>
+                            <Dashboard />
+                          </NonSalespersonGuard>
+                        }
+                      />
+                      <Route
+                        path="payment"
+                        element={
+                          <NonSalespersonGuard>
+                            <Payment />
+                          </NonSalespersonGuard>
+                        }
+                      />
+                      <Route
+                        path="reviews"
+                        element={
+                          <NonSalespersonGuard>
+                            <SubscriptionGuard>
+                              <Reviews />
+                            </SubscriptionGuard>
+                          </NonSalespersonGuard>
+                        }
+                      />
+                      <Route
+                        path="qr-code"
+                        element={
+                          <NonSalespersonGuard>
+                            <SubscriptionGuard>
+                              <QrCode />
+                            </SubscriptionGuard>
+                          </NonSalespersonGuard>
+                        }
+                      />
+                      <Route path="settings" element={<Settings />} />
+                      <Route
+                        path="referrals"
+                        element={
+                          <OnboardingGuard>
+                            {({ user }) =>
+                              user?.isSalesperson ? (
+                                <ReferralDashboard />
+                              ) : (
+                                <Navigate to="/dashboard" replace />
+                              )
+                            }
+                          </OnboardingGuard>
+                        }
+                      />
+                    </Routes>
+                  </OnboardingGuard>
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/salesperson/dashboard"
               element={
                 <ProtectedRoute>
                   <OnboardingGuard>
-                    {({ user }) => user?.isSalesperson ? (
-                      <SalespersonDashboard />
-                    ) : (
-                      <Navigate to="/dashboard" replace />
-                    )}
+                    {({ user }) =>
+                      user?.isSalesperson ? (
+                        <SalespersonDashboard />
+                      ) : (
+                        <Navigate to="/dashboard" replace />
+                      )
+                    }
                   </OnboardingGuard>
                 </ProtectedRoute>
               }
@@ -102,7 +147,8 @@ const App = () => (
             <Route path="/review/:businessId" element={<Review />} />
             <Route path="/survey/:businessId" element={<Survey />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/forgot-password" element={<ForgotPassword/>} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="businesses" element={<BusinessList />} />
@@ -111,7 +157,6 @@ const App = () => (
               <Route path="financial" element={<FinancialOverview />} />
               <Route path="coupons" element={<CouponManager />} />
             </Route>
-            <Route path="/reset-password" element={<ResetPassword/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
