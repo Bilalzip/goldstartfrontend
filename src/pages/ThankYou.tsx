@@ -52,7 +52,7 @@ const ThankYou = () => {
                 <p>
                   Need help? Contact our support team at{" "}
                   <a href="mailto:support@thegoldstar.ca" className="text-brand-600 hover:underline">
-                    support@support@thegoldstar.ca
+                  support@thegoldstar.ca
                   </a>
                 </p>
               </AnimatedSection>
