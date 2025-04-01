@@ -67,7 +67,7 @@ const Pricing = () => {
               <div className="flex justify-center mb-8">
                 <div className="text-center">
                   <div className="mb-2">
-                    <span className="text-2xl text-gray-400 line-through">$399</span>
+                    <span className="text-2xl text-gray-400 line-through">$349</span>
                     <span className="ml-2 text-red-500 font-semibold">Limited Time Offer</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
