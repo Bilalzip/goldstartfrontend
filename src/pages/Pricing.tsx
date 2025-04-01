@@ -104,7 +104,7 @@ const Pricing = () => {
                   asChild
                 >
                   <Link to="/signup">
-                    Start Now – Only $349/month
+                    Start Now – Only $399/month
                   </Link>
                 </Button>
                 <div className="mt-3 space-y-1">

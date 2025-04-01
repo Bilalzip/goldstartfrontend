@@ -53,7 +53,7 @@ const Index = () => {
                   className="bg-brand-600 hover:bg-brand-700 transition-colors"
                 >
                   <Link to="/signup" className="flex items-center gap-2">
-                    Get Started - $300/month
+                    Get Started - $399/month
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
