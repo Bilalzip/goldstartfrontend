@@ -247,12 +247,12 @@ const PaymentForm = ({ isSubmitting, onSubmit, onBack }: PaymentFormProps) => {
           <div className="rounded-lg border p-4 bg-gray-50">
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium">Monthly Subscription</span>
-              <span>$399.00</span>
+              <span>$349.00</span>
             </div>
             <div className="border-t pt-2 mt-2">
               <div className="flex justify-between items-center font-medium">
                 <span>Total</span>
-                <span className="text-lg">$399.00/month</span>
+                <span className="text-lg">$349.00/month</span>
               </div>
               <p className="text-xs text-gray-500 mt-1">
                 Your subscription will automatically renew each month. You can cancel anytime.
@@ -286,7 +286,7 @@ const PaymentForm = ({ isSubmitting, onSubmit, onBack }: PaymentFormProps) => {
                 Processing...
               </>
             ) : (
-              <>Complete Subscription – $399/month</>
+              <>Complete Subscription – $349/month</>
             )}
           </Button>
         </AnimatedSection>

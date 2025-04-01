@@ -40,7 +40,7 @@ const CallToAction = ({ className = "" }: CallToActionProps) => {
             asChild
           >
             <Link to="/signup">
-              Get Started – $399/month
+              Get Started – $349/month
             </Link>
           </Button>
         </motion.div>

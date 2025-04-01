@@ -97,12 +97,12 @@ export default function Payment() {
   };
 
   const getPrice = () => {
-    if (!appliedCoupon) return '$399/month';
+    if (!appliedCoupon) return '$349/month';
     if (appliedCoupon.type === 'trial') return 'Free Trial';
     const discountedPrice = 399 * (1 - appliedCoupon.value / 100);
     return `$${discountedPrice.toFixed(2)}/month`;
   };
-
+  
   useEffect(() => {
     if (appliedCoupon?.type === 'trial') {
       const timer = setTimeout(() => {

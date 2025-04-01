@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     question: "Is there a contract or can I cancel anytime?",
-    answer: "There's no long-term contract. The service is billed monthly at $399, and you can cancel at any time without penalties. We're confident you'll see value from our service, but we don't believe in locking customers into contracts."
+    answer: "There's no long-term contract. The service is billed monthly at $349, and you can cancel at any time without penalties. We're confident you'll see value from our service, but we don't believe in locking customers into contracts."
   },
   {
     question: "How do I know if customers are leaving reviews?",
