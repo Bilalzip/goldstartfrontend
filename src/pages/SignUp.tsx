@@ -70,8 +70,11 @@ const SignUp = () => {
       localStorage.setItem('user', JSON.stringify(result.user));
       localStorage.setItem('token', result.token);
       toast.success("Account created successfully!");
+
+
       if(formData.isSalesperson){
-        navigate("/salesperson/dashboard");  // Correct route for salespersons
+        console.log("i come here ");
+        navigate("/");  // Correct route for salespersons
       } else {
         navigate("/onboarding");
       }

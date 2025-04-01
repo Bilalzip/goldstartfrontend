@@ -12,7 +12,11 @@ const OnboardingGuard: React.FC<OnboardingGuardProps> = ({ children }) => {
   // Avoid unnecessary re-renders and state changes
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   if (!user) return null; // Wait for user data
-  if (!user.onboarding_completed) return <Navigate to="/onboarding" replace />;
+  // Only redirect normal users (non-salespersons) who haven't completed onboarding.
+  if (!user.isSalesperson && !user.onboarding_completed && location.pathname !== '/onboarding') {
+    return <Navigate to="/onboarding" replace />;
+  }
+  
   
   return <>{typeof children === 'function' ? children({ user }) : children}</>;
 };

@@ -33,7 +33,7 @@ const Contact = () => {
       const response = await api.post('/contact', formData);
       
       if (response.data.success) {
-        toast.success("Message sent successfully! We'll get back to you soon.");
+        toast.message("Message sent successfully! We'll get back to you soon.");
         setFormData({
           name: "",
           email: "",
