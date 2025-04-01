@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://www.thegoldstar.ca',
+  baseURL: 'https://goldstarserver-xeqt.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },
