@@ -92,7 +92,7 @@ const SignUp = () => {
               Create Your Account
             </h1>
             <p className="text-muted-foreground text-lg">
-              Get started with Reputation Rocket
+              Get started with The Gold Star
             </p>
           </AnimatedSection>
 

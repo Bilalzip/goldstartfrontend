@@ -12,9 +12,9 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
 
   if (!user?.is_admin) {
     // Redirect to dashboard if not admin
-    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
-
+  
   return <>{children}</>;
 };
 
