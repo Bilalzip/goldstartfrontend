@@ -74,7 +74,7 @@ const SignUp = () => {
 
       if(formData.isSalesperson){
         console.log("i come here ");
-        navigate("/");  // Correct route for salespersons
+        navigate("/dashboard/referrals");  // Correct route for salespersons
       } else {
         navigate("/onboarding");
       }
