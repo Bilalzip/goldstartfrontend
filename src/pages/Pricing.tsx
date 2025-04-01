@@ -132,7 +132,7 @@ const Pricing = () => {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-bold mb-4"
             >
-              Why Choose Reputation Rocket?
+              Why Choose The Gold Star?
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -156,7 +156,7 @@ const Pricing = () => {
               <thead>
                 <tr className="border-b">
                   <th className="p-5 text-left">Feature</th>
-                  <th className="p-5 text-center text-brand-600">Reputation Rocket</th>
+                  <th className="p-5 text-center text-brand-600">The Gold Star</th>
                   <th className="p-5 text-center">Traditional Approach</th>
                 </tr>
               </thead>

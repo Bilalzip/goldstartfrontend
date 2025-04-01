@@ -11,9 +11,9 @@ const Footer = () => {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-white">
-                <span className="text-xl font-bold">RR</span>
+                <span className="text-xl font-bold">TGS</span>
               </div>
-              <span className="text-xl font-bold">Reputation Rocket</span>
+              <span className="text-xl font-bold">The Gold Star</span>
             </Link>
             <p className="text-muted-foreground max-w-xs">
               Helping businesses boost their Google reviews by strategically routing customer feedback.
@@ -60,7 +60,7 @@ const Footer = () => {
 
         <div className="border-t mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {year} Reputation Rocket. All rights reserved.
+            © {year} The Gold Star. All rights reserved.
           </p>
           <div className="flex gap-4">
             <a href="#" className="text-muted-foreground hover:text-brand-600 transition-colors">

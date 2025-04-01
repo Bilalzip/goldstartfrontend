@@ -219,7 +219,7 @@ const PaymentForm = ({ isSubmitting, onSubmit, onBack }: PaymentFormProps) => {
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Account Name:</span>
-                  <span className="font-medium">Reputation Rocket LLC</span>
+                  <span className="font-medium">The Gold Star LLC</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Account Number:</span>

@@ -199,7 +199,7 @@ const Index = () => {
             name="Sarah Johnson"
             role="Owner"
             company="Riverdale Cafe"
-            testimonial="Since using Reputation Rocket, our Google rating has gone from 3.8 to 4.7 stars! The automatic review routing has been a game-changer for our business."
+            testimonial="Since using The Gold Star, our Google rating has gone from 3.8 to 4.7 stars! The automatic review routing has been a game-changer for our business."
             delay={0.1}
           />
           
@@ -268,7 +268,7 @@ const Index = () => {
                     RR
                   </div>
                   <div>
-                    <p className="font-semibold">Reputation Rocket</p>
+                    <p className="font-semibold">The Gold Star</p>
                     <p className="text-sm text-muted-foreground">Online now</p>
                   </div>
                 </div>
