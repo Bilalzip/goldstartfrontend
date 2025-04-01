@@ -48,13 +48,20 @@ export const signup = createAsyncThunk(
     password: string;
     isSalesperson: boolean;
     referralCode?: string 
-  }) => {
-    const response = await api.post('/auth/signup', credentials);
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('userEmail', credentials.email);
-    localStorage.setItem('user', JSON.stringify(response.data.user));
-    console.log(response)
-    return response.data;
+  }, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/auth/signup', credentials);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userEmail', credentials.email);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      return response.data;
+    } catch (error: any) {
+      console.log(error.response?.data?.message)
+      return rejectWithValue(
+        error.response?.data?.message || 
+        'An email already exist'
+      );
+    }
   }
 );
 

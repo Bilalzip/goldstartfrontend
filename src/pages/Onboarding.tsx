@@ -57,7 +57,8 @@ const Onboarding = () => {
         email: response.data.user.email,
         businessName: response.data.user.businessName,
         isSalesperson: response.data.user.isSalesperson || existingUser.isSalesperson, // Preserve salesperson status
-        onboarding_completed: response.data.user.onboarding_completed
+        onboarding_completed: response.data.user.onboarding_completed,
+        subscriptionStatus: response.data.user.subscriptionStatus
       };
       
       // Update both localStorage and Redux state

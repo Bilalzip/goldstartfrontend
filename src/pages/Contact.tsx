@@ -83,7 +83,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-medium">Email Us</h3>
-                  <p className="text-muted-foreground">info@reputationrocket.com</p>
+                  <p className="text-muted-foreground">Thejulianlucic@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -92,7 +92,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-medium">Call Us</h3>
-                  <p className="text-muted-foreground">(555) 123-4567</p>
+                  <p className="text-muted-foreground">416-553-8403</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -101,7 +101,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-medium">Visit Us</h3>
-                  <p className="text-muted-foreground">123 Business Ave, Suite 200<br />San Francisco, CA 94107</p>
+                  <p className="text-muted-foreground">48 Sellers Avenue<br /> Toronto, Ontario M6E3T6</p>
                 </div>
               </div>
             </div>

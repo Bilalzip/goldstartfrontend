@@ -10,12 +10,13 @@ interface SubscriptionGuardProps {
 
 const SubscriptionGuard = ({ children }: SubscriptionGuardProps) => {
   const { user } = useSelector((state: RootState) => state.auth);
+  console.log(user)
 
   if (user?.subscriptionStatus === "pending" && !user?.hasFreeTrialCoupon) {
     toast.error("Please subscribe to access this feature");
     return <Navigate to="/dashboard/payment" replace />;
   }
-
+  
   return <>{children}</>;
 };
 

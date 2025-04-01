@@ -69,7 +69,6 @@ const SignUp = () => {
       
       localStorage.setItem('user', JSON.stringify(result.user));
       localStorage.setItem('token', result.token);
-      console.log(JSON.stringify(result.user))
       toast.success("Account created successfully!");
       if(formData.isSalesperson){
         navigate("/dashboard");
@@ -77,7 +76,7 @@ const SignUp = () => {
         navigate("/onboarding");
       }
     } catch (error: any) {
-      toast.error(error?.message);
+      toast.error(error?.response?.data?.message || error?.message || 'You already have an account ');
     } finally {
       setIsSubmitting(false);
     }

@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import api from '@/services/api';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Input } from '@/components/ui/input';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/store/slices/authSlice';
 
 interface Coupon {
   code: string;
@@ -21,6 +23,7 @@ export default function Payment() {
   const [isApplying, setIsApplying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
@@ -33,7 +36,21 @@ export default function Payment() {
       const response = await api.post('/auth/coupons/validate', { code: couponCode });
       setAppliedCoupon(response.data);
       
+      // Get current user data
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+      
       if (response.data.type === 'trial') {
+        // Update user data with trial status
+        const updatedUser = {
+          ...currentUser,
+          subscriptionStatus: 'trial',
+          hasFreeTrialCoupon: true
+        };
+        
+        // Update Redux store and localStorage
+        dispatch(setUser(updatedUser));
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        
         toast.success(`Trial activated for ${response.data.value} days!`);
         navigate('/dashboard');
       } else {

@@ -67,11 +67,11 @@ const Pricing = () => {
               <div className="flex justify-center mb-8">
                 <div className="text-center">
                   <div className="mb-2">
-                    <span className="text-2xl text-gray-400 line-through">$399</span>
+                    <span className="text-2xl text-gray-400 line-through">$499</span>
                     <span className="ml-2 text-red-500 font-semibold">Limited Time Offer</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-5xl font-bold text-brand-600">$349</span>
+                    <span className="text-5xl font-bold text-brand-600">$399</span>
                     <span className="text-xl text-muted-foreground">/month</span>
                   </div>
                   <p className="text-muted-foreground mt-2">No contracts, cancel anytime</p>
@@ -112,7 +112,7 @@ const Pricing = () => {
                     14-day satisfaction guarantee or your money back
                   </p>
                   <p className="text-sm text-red-500 font-medium">
-                    Save $50 when you sign up today!
+                    Save $100 when you sign up today!
                   </p>
                 </div>
               </div>
