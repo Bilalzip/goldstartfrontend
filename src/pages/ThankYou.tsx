@@ -14,7 +14,7 @@ const ThankYou = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar />
+  
       <div className="flex-1 pt-24 pb-12 flex items-center justify-center">
         <div className="container max-w-4xl">
           <div className="bg-white rounded-xl shadow-md p-8 md:p-12">
