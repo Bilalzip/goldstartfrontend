@@ -71,7 +71,7 @@ const SignUp = () => {
       localStorage.setItem('token', result.token);
       toast.success("Account created successfully!");
       if(formData.isSalesperson){
-        navigate("/dashboard");
+        navigate("/salesperson/dashboard");  // Correct route for salespersons
       } else {
         navigate("/onboarding");
       }
@@ -95,7 +95,7 @@ const SignUp = () => {
               Get started with The Gold Star
             </p>
           </AnimatedSection>
-
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

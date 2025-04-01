@@ -119,6 +119,7 @@ const SignUpForm = ({ initialData, onSubmit, disabledFields = [] }: SignUpFormPr
       
       toast.success("Account created successfully!");
       navigate("/onboarding");
+      
     } catch (error: any) {
       toast.error(error || "Signup failed. Please try again.");
     } finally {
