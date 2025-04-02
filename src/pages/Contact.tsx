@@ -106,13 +106,8 @@ const Contact = () => {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="bg-brand-100 text-brand-600 p-3 rounded-lg">
-                  <MapPinIcon className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Visit Us</h3>
-                  <p className="text-muted-foreground">48 Sellers Avenue<br /> Toronto, Ontario M6E3T6</p>
-                </div>
+               
+             
               </div>
             </div>
           </motion.div>
