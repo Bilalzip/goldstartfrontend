@@ -39,6 +39,16 @@ import CouponManager from "@/components/admin/CouponManager";
 import NonSalespersonGuard from "@/components/NonSalespersonGuard";
 import SubscriptionGuard from "@/components/SubscriptionGuard";
 
+// Import Legal Pages
+import Legal from "./pages/legal";
+import TermsOfService from "./pages/legal/TermsOfService";
+import PrivacyPolicy from "./pages/legal/PrivacyPolicy";
+import RefundPolicy from "./pages/legal/RefundPolicy";
+import PaymentPolicy from "./pages/legal/PaymentPolicy";
+import CookiePolicy from "./pages/legal/CookiePolicy";
+import Disclaimer from "./pages/legal/Disclaimer";
+import ReviewSubmitter from "./pages/legal/ReviewSubmitter";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -55,6 +65,20 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/thank-you" element={<ThankYou />} />
+
+            {/* Legal Pages */}
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/legal/terms" element={<TermsOfService />} />
+            <Route path="/legal/privacy" element={<PrivacyPolicy />} />
+            <Route path="/legal/refund" element={<RefundPolicy />} />
+            <Route path="/legal/payment" element={<PaymentPolicy />} />
+            <Route path="/legal/cookie" element={<CookiePolicy />} />
+            <Route path="/legal/disclaimer" element={<Disclaimer />} />
+            <Route
+              path="/legal/review-submitter"
+              element={<ReviewSubmitter />}
+            />
+
             <Route
               path="/onboarding"
               element={

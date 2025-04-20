@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CallToAction from "@/components/CallToAction";
@@ -17,14 +17,14 @@ const features = [
   "Email notifications",
   "Unlimited reviews",
   "Custom branding",
-  "Dedicated support"
+  "Dedicated support",
 ];
 
 const Pricing = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-b from-white to-brand-50">
         <div className="container">
@@ -38,12 +38,13 @@ const Pricing = () => {
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              One comprehensive plan with everything you need to boost your Google reviews and manage your online reputation.
+              One comprehensive plan with everything you need to boost your
+              Google reviews and manage your online reputation.
             </p>
           </motion.div>
         </div>
       </section>
-      
+
       {/* Pricing Card */}
       <section className="py-16 container">
         <motion.div
@@ -59,31 +60,47 @@ const Pricing = () => {
             </div>
 
             <div className="bg-brand-600 text-white py-6 px-8 text-center">
-              <h2 className="text-2xl md:text-3xl font-bold">Review Management Service</h2>
-              <p className="text-white/80 mt-2">Everything you need to boost your online reputation</p>
+              <h2 className="text-2xl md:text-3xl font-bold">
+                Review Management Service
+              </h2>
+              <p className="text-white/80 mt-2">
+                Everything you need to boost your online reputation
+              </p>
             </div>
-            
+
             <div className="p-8 md:p-12">
               <div className="flex justify-center mb-8">
                 <div className="text-center">
                   <div className="mb-2">
-                    <span className="text-2xl text-gray-400 line-through">$399</span>
-                    <span className="ml-2 text-red-500 font-semibold">Limited Time Offer</span>
+                    <span className="text-2xl text-gray-400 line-through">
+                      CAD $399
+                    </span>
+                    <span className="ml-2 text-red-500 font-semibold">
+                      Limited Time Offer
+                    </span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-5xl font-bold text-brand-600">$349</span>
-                    <span className="text-xl text-muted-foreground">/month</span>
+                    <span className="text-5xl font-bold text-brand-600">
+                      CAD $349
+                    </span>
+                    <span className="text-xl text-muted-foreground">
+                      /month
+                    </span>
                   </div>
-                  <p className="text-muted-foreground mt-2">No contracts, cancel anytime</p>
-                  <p className="text-sm text-red-500 font-medium mt-1">*Offer ends soon</p>
+                  <p className="text-muted-foreground mt-2">
+                    That's only about $11.63/day
+                  </p>
+                  <p className="text-sm text-red-500 font-medium mt-1">
+                    *Offer ends soon
+                  </p>
                 </div>
               </div>
-              
+
               <div className="mb-8">
                 <h3 className="text-xl font-semibold mb-4">What's Included:</h3>
                 <ul className="space-y-4">
                   {features.map((feature, index) => (
-                    <motion.li 
+                    <motion.li
                       key={index}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -96,21 +113,19 @@ const Pricing = () => {
                   ))}
                 </ul>
               </div>
-              
+
               <div className="text-center">
-                <Button 
-                  size="lg" 
-                  className="w-full md:w-auto px-12 bg-brand-600 hover:bg-brand-700 transition-colors" 
+                <Button
+                  size="lg"
+                  className="w-full md:w-auto px-12 bg-brand-600 hover:bg-brand-700 transition-colors"
                   asChild
                 >
                   <Link to="/signup">
-                    Start Now – Only $349/month
+                    Start building your 5-star reputation today for just
+                    $11.63/day!
                   </Link>
                 </Button>
                 <div className="mt-3 space-y-1">
-                  <p className="text-sm text-muted-foreground">
-                    14-day satisfaction guarantee or your money back
-                  </p>
                   <p className="text-sm text-red-500 font-medium">
                     Save $50 when you sign up today!
                   </p>
@@ -120,12 +135,12 @@ const Pricing = () => {
           </Card>
         </motion.div>
       </section>
-      
+
       {/* Comparison Section */}
       <section className="py-16 bg-secondary/50">
         <div className="container">
           <div className="text-center mb-12">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -141,10 +156,11 @@ const Pricing = () => {
               viewport={{ once: true }}
               className="text-lg text-muted-foreground max-w-2xl mx-auto"
             >
-              Here's how our service compares to traditional review management approaches.
+              Here's how our service compares to traditional review management
+              approaches.
             </motion.p>
           </div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -156,13 +172,17 @@ const Pricing = () => {
               <thead>
                 <tr className="border-b">
                   <th className="p-5 text-left">Feature</th>
-                  <th className="p-5 text-center text-brand-600">The Gold Star</th>
+                  <th className="p-5 text-center text-brand-600">
+                    The Gold Star
+                  </th>
                   <th className="p-5 text-center">Traditional Approach</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b">
-                  <td className="p-5">Filter negative reviews before they go public</td>
+                  <td className="p-5">
+                    Filter negative reviews before they go public
+                  </td>
                   <td className="p-5 text-center text-brand-600">✓</td>
                   <td className="p-5 text-center">✗</td>
                 </tr>
@@ -191,11 +211,11 @@ const Pricing = () => {
           </motion.div>
         </div>
       </section>
-      
+
       {/* FAQ Section */}
       <section className="section container">
         <div className="text-center mb-8">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -214,15 +234,15 @@ const Pricing = () => {
             Get answers to common questions about our pricing and service.
           </motion.p>
         </div>
-        
+
         <Faq />
       </section>
-      
+
       {/* Call to Action */}
       <section className="section container">
         <CallToAction />
       </section>
-      
+
       <Footer />
     </div>
   );

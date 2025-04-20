@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AnimatedSection from "@/components/AnimatedSection";
-import { useDispatch } from 'react-redux';
-import { signup } from '@/store/slices/authSlice';
-import type { AppDispatch } from '@/store/store';
+import { useDispatch } from "react-redux";
+import { signup } from "@/store/slices/authSlice";
+import type { AppDispatch } from "@/store/store";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface SignUpFormData {
@@ -25,22 +25,23 @@ type OnboardingFormData = {
   phone: string;
   address: string;
   googleReviewLink: string;
-}
+};
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
-  
-  const referralCode = searchParams.get('ref');
+
+  const referralCode = searchParams.get("ref");
 
   const [formData, setFormData] = useState<SignUpFormData>({
     email: "",
     password: "",
     confirmPassword: "",
-    isSalesperson: false
+    isSalesperson: false,
   });
 
+  const [legalConsent, setLegalConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,37 +50,49 @@ const SignUp = () => {
       [e.target.name]: e.target.value,
     });
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
 
+    if (!legalConsent) {
+      toast.error(
+        "You must agree to the terms and policies to create an account"
+      );
+      return;
+    }
+
     try {
       setIsSubmitting(true);
-      const result = await dispatch(signup({
-        email: formData.email,
-        password: formData.password,
-        isSalesperson: formData.isSalesperson,
-        referralCode: referralCode || undefined
-      })).unwrap();
-      
-      localStorage.setItem('user', JSON.stringify(result.user));
-      localStorage.setItem('token', result.token);
+      const result = await dispatch(
+        signup({
+          email: formData.email,
+          password: formData.password,
+          isSalesperson: formData.isSalesperson,
+          referralCode: referralCode || undefined,
+        })
+      ).unwrap();
+
+      localStorage.setItem("user", JSON.stringify(result.user));
+      localStorage.setItem("token", result.token);
       toast.success("Account created successfully!");
 
-
-      if(formData.isSalesperson){
+      if (formData.isSalesperson) {
         console.log("i come here ");
-        navigate("/dashboard/referrals");  // Correct route for salespersons
+        navigate("/dashboard/referrals"); // Correct route for salespersons
       } else {
         navigate("/onboarding");
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || error?.message || 'You already have an account ');
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "You already have an account "
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -98,7 +111,7 @@ const SignUp = () => {
               Get started with The Gold Star
             </p>
           </AnimatedSection>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,15 +158,18 @@ const SignUp = () => {
               </div>
 
               <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="isSalesperson" 
+                <Checkbox
+                  id="isSalesperson"
                   checked={formData.isSalesperson}
-                  onCheckedChange={(checked) => 
-                    setFormData(prev => ({ ...prev, isSalesperson: checked as boolean }))
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      isSalesperson: checked as boolean,
+                    }))
                   }
                 />
-                <label 
-                  htmlFor="isSalesperson" 
+                <label
+                  htmlFor="isSalesperson"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   Sign up as a salesperson
@@ -167,6 +183,59 @@ const SignUp = () => {
                   </p>
                 </div>
               )}
+
+              {/* Legal consent checkbox - added as per requirements */}
+              <div className="space-y-4 mt-6 border-t pt-6">
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="legal-consent"
+                    checked={legalConsent}
+                    onCheckedChange={(checked) =>
+                      setLegalConsent(checked as boolean)
+                    }
+                    className="mt-1"
+                    required
+                  />
+                  <div>
+                    <label
+                      htmlFor="legal-consent"
+                      className="text-sm leading-relaxed"
+                    >
+                      By checking this box, I confirm that I have read and agree
+                      to The Gold Star's{" "}
+                      <Link
+                        to="/legal/terms"
+                        className="text-brand-600 hover:underline"
+                      >
+                        Terms of Service
+                      </Link>
+                      ,{" "}
+                      <Link
+                        to="/legal/privacy"
+                        className="text-brand-600 hover:underline"
+                      >
+                        Privacy Policy
+                      </Link>
+                      ,{" "}
+                      <Link
+                        to="/legal/refund"
+                        className="text-brand-600 hover:underline"
+                      >
+                        Refund & Cancellation Policy
+                      </Link>
+                      , and{" "}
+                      <Link
+                        to="/legal/payment"
+                        className="text-brand-600 hover:underline"
+                      >
+                        Payment & Billing Policy
+                      </Link>
+                      . I authorize recurring billing through my selected
+                      payment method.
+                    </label>
+                  </div>
+                </div>
+              </div>
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? "Creating Account..." : "Create Account"}
