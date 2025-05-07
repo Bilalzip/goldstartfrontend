@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import {
   Card,
@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Download, Copy, RefreshCw, Printer } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { generateQrCode } from "@/services/qrCode";
+import { jsPDF } from "jspdf";
 
 const QrCode = () => {
   const { toast } = useToast();
@@ -20,11 +21,6 @@ const QrCode = () => {
   const [businessName, setBusinessName] = useState<string>("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeTab, setActiveTab] = useState("standard");
-
-  // Refs for the different QR code designs
-  const standardQrRef = useRef<HTMLDivElement>(null);
-  const tableQrRef = useRef<HTMLDivElement>(null);
-  const posterQrRef = useRef<HTMLDivElement>(null);
 
   const generateNewQrCode = async (type: string) => {
     try {
@@ -68,13 +64,13 @@ const QrCode = () => {
       if (format === "png") {
         downloadAsPng();
       } else if (format === "pdf") {
-        // Since we don't have jsPDF, we'll use an alternative method
-        prepareForPrint();
-        toast({
-          title: "PDF Download",
-          description: "Use the browser's print dialog to save as PDF",
-        });
+        downloadAsPdf();
       }
+
+      toast({
+        title: "Download Started",
+        description: `Downloading QR code in ${format.toUpperCase()} format`,
+      });
     } catch (error) {
       console.error(`Error downloading as ${format}:`, error);
       toast.error(`Failed to download as ${format.toUpperCase()}`);
@@ -102,122 +98,63 @@ const QrCode = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    toast({
-      title: "PNG Downloaded",
-      description: `QR code downloaded as ${fileName}`,
-    });
   };
 
-  // Since we can't use jsPDF, we'll prepare the content for printing
-  // and guide the user to save as PDF from the print dialog
-  const prepareForPrint = () => {
-    // First, let's create a printable version of our QR code
-    const printWindow = window.open("", "_blank");
+  // Function to download QR code as PDF directly
+  const downloadAsPdf = () => {
+    // Create new PDF document
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
 
-    if (!printWindow) {
-      toast.error(
-        "Unable to open print window. Please check your popup blocker settings."
-      );
-      return;
-    }
-
-    // Get appropriate content based on active tab
+    // Determine which type of QR code is active
     let title = "";
-    let qrImage = "";
-
-    if (qrCodeData) {
-      qrImage = qrCodeData;
-
-      if (activeTab === "standard") {
-        title = "Standard QR Code";
-      } else if (activeTab === "table") {
-        title = "Table Tent QR Code";
-      } else if (activeTab === "poster") {
-        title = "Poster QR Code";
-      }
+    if (activeTab === "standard") {
+      title = "Standard QR Code";
+    } else if (activeTab === "table") {
+      title = "Table Tent QR Code";
+    } else if (activeTab === "poster") {
+      title = "Poster QR Code";
     }
 
-    // Create a nice HTML document for printing
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>${businessName || "Your Business"} - ${title}</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            text-align: center;
-          }
-          .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #eaeaea;
-            border-radius: 8px;
-          }
-          .qr-image {
-            margin: 20px auto;
-            max-width: 300px;
-          }
-          .instructions {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
-          }
-          .url {
-            font-family: monospace;
-            margin-top: 20px;
-            word-break: break-all;
-          }
-          @media print {
-            .no-print {
-              display: none;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <h1>${businessName || "Your Business"}</h1>
-          <h2>${title}</h2>
-          
-          <div class="qr-image">
-            <img src="${qrImage}" alt="QR Code" style="width: 100%; height: auto;">
-          </div>
-          
-          <p class="instructions">Scan this QR code to leave a review</p>
-          
-          ${reviewUrl ? `<p class="url">Review URL: ${reviewUrl}</p>` : ""}
-          
-          <div class="no-print">
-            <p style="margin-top: 30px;">To save as PDF: Use your browser's print dialog (Ctrl+P or Cmd+P) and select "Save as PDF" as the destination.</p>
-          </div>
-        </div>
-        
-        <script>
-          // Auto-open print dialog after the page loads
-          window.onload = function() {
-            setTimeout(function() {
-              window.print();
-            }, 500);
-          };
-        </script>
-      </body>
-      </html>
-    `);
+    // Add business name and title to PDF
+    pdf.setFontSize(16);
+    pdf.text(businessName || "Your Business", 105, 20, { align: "center" });
 
-    printWindow.document.close();
+    pdf.setFontSize(14);
+    pdf.text(title, 105, 30, { align: "center" });
+
+    // Add QR code image to PDF
+    if (qrCodeData) {
+      // Position the QR code in the center of the page
+      pdf.addImage(qrCodeData, "PNG", 65, 40, 80, 80);
+
+      // Add review URL below the QR code
+      pdf.setFontSize(10);
+      pdf.text(`Review URL: ${reviewUrl}`, 105, 130, { align: "center" });
+
+      // Add instructions
+      pdf.setFontSize(12);
+      pdf.text("Scan the QR code to leave a review", 105, 140, {
+        align: "center",
+      });
+    }
+
+    // Set the file name
+    const fileName = businessName
+      ? `${businessName
+          .replace(/\s+/g, "-")
+          .toLowerCase()}-qr-code-${activeTab}.pdf`
+      : `qr-code-${activeTab}.pdf`;
+
+    // Save the PDF and download it
+    pdf.save(fileName);
   };
 
   const handlePrint = () => {
-    if (!qrCodeData) {
-      toast.error("No QR code available to print");
-      return;
-    }
-
-    prepareForPrint();
+    window.print();
     toast({
       title: "Print Dialog Opened",
       description: "Prepare to print your QR code",
@@ -293,10 +230,7 @@ const QrCode = () => {
                 <TabsTrigger value="poster">Poster</TabsTrigger>
               </TabsList>
               <TabsContent value="standard" className="mt-4">
-                <div
-                  ref={standardQrRef}
-                  className="bg-gray-100 rounded-lg p-4 mb-4 aspect-square flex items-center justify-center"
-                >
+                <div className="bg-gray-100 rounded-lg p-4 mb-4 aspect-square flex items-center justify-center">
                   <img
                     src={qrCodeData || ""}
                     alt="Standard QR Code"
@@ -309,10 +243,7 @@ const QrCode = () => {
                 </p>
               </TabsContent>
               <TabsContent value="table" className="mt-4">
-                <div
-                  ref={tableQrRef}
-                  className="bg-gray-100 rounded-lg p-4 mb-4 aspect-[4/5] flex items-center justify-center"
-                >
+                <div className="bg-gray-100 rounded-lg p-4 mb-4 aspect-[4/5] flex items-center justify-center">
                   <div className="bg-white p-6 rounded-lg shadow-sm text-center w-4/5">
                     <h3 className="font-bold mb-2">Please Rate Us!</h3>
                     <div className="flex justify-center">
@@ -333,10 +264,7 @@ const QrCode = () => {
                 </p>
               </TabsContent>
               <TabsContent value="poster" className="mt-4">
-                <div
-                  ref={posterQrRef}
-                  className="bg-gray-100 rounded-lg p-4 mb-4 aspect-[3/4] flex items-center justify-center"
-                >
+                <div className="bg-gray-100 rounded-lg p-4 mb-4 aspect-[3/4] flex items-center justify-center">
                   <div className="bg-white p-6 rounded-lg shadow-sm text-center w-4/5">
                     <h3 className="font-bold text-xl mb-1">
                       Enjoyed Your Visit?
@@ -365,7 +293,7 @@ const QrCode = () => {
                 </Button>
                 <Button variant="outline" onClick={() => handleDownload("pdf")}>
                   <Download className="mr-2 h-4 w-4" />
-                  Save as PDF
+                  Download PDF
                 </Button>
                 <Button variant="outline" onClick={handlePrint}>
                   <Printer className="mr-2 h-4 w-4" />
