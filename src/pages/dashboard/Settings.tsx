@@ -40,6 +40,14 @@ const Settings = () => {
     "active" | "trial" | "cancelled" | null
   >(null);
   const [trialEndsAt, setTrialEndsAt] = useState<string | null>(null);
+  const [subscriptionEndsAt, setSubscriptionEndsAt] = useState<string | null>(
+    null
+  );
+  const [paymentMethod, setPaymentMethod] = useState<{
+    cardLast4: string | null;
+    cardBrand: string | null;
+    displayName: string | null;
+  } | null>(null);
 
   // Fetch business profile data when component mounts
   useEffect(() => {
@@ -74,8 +82,11 @@ const Settings = () => {
     const fetchSubscriptionStatus = async () => {
       try {
         const response = await api.get("/payment/subscription-status");
+        console.log("Subscription response: ", response);
         setSubscriptionStatus(response.data.status);
         setTrialEndsAt(response.data.trialEndsAt);
+        setSubscriptionEndsAt(response.data.subscriptionEndsAt);
+        setPaymentMethod(response.data.paymentMethod);
       } catch (error) {
         console.error("Error fetching subscription status:", error);
         toast({
@@ -188,10 +199,6 @@ const Settings = () => {
         <TabsList>
           <TabsTrigger value="profile">Business Profile</TabsTrigger>
           <TabsTrigger value="subscription">Subscription</TabsTrigger>
-          {/* {user?.isSalesperson && (
-            // <TabsTrigger value="referrals">Referral Settings</TabsTrigger>
-          )} */}
-          {/* <TabsTrigger value="notifications">Notifications</TabsTrigger> */}
         </TabsList>
 
         <TabsContent value="profile">
@@ -357,13 +364,23 @@ const Settings = () => {
                     <div className="flex justify-between mb-2">
                       <span className="text-sm">Next billing date:</span>
                       <span className="text-sm font-medium">
-                        October 15, 2023
+                        {subscriptionEndsAt
+                          ? new Date(subscriptionEndsAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )
+                          : "Not available"}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm">Payment method:</span>
                       <span className="text-sm font-medium">
-                        Visa ending in 4242
+                        {paymentMethod?.displayName ||
+                          "No payment method found"}
                       </span>
                     </div>
                   </div>
@@ -436,79 +453,6 @@ const Settings = () => {
             {/* Referral settings content */}
           </TabsContent>
         )}
-
-        {/* <TabsContent value="notifications">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
-                Choose how and when you receive notifications
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4">
-                <h3 className="font-medium">Email Notifications</h3>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">New Reviews</p>
-                    <p className="text-sm text-muted-foreground">Get notified when you receive a new review</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-600"></div>
-                    </label>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Negative Feedback</p>
-                    <p className="text-sm text-muted-foreground">Get notified for reviews with 3 stars or less</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-600"></div>
-                    </label>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Weekly Summary</p>
-                    <p className="text-sm text-muted-foreground">Receive a weekly summary of your reviews</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-600"></div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t">
-                <h3 className="font-medium mb-4">Email Delivery</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="notificationEmail">Notification Email</Label>
-                  <Input
-                    id="notificationEmail"
-                    defaultValue="jane@acmecoffee.com"
-                    type="email"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    This is where all notifications will be sent
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end">
-              <Button>Save Preferences</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent> */}
       </Tabs>
     </DashboardLayout>
   );
