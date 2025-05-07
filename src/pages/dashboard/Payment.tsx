@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Check, Loader2, Tag, X } from 'lucide-react';
-import { toast } from 'sonner';
-import api from '@/services/api';
-import DashboardLayout from '@/components/dashboard/DashboardLayout';
-import { Input } from '@/components/ui/input';
-import { useDispatch } from 'react-redux';
-import { setUser } from '@/store/slices/authSlice';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Check, Loader2, Tag, X } from "lucide-react";
+import { toast } from "sonner";
+import api from "@/services/api";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import { Input } from "@/components/ui/input";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/slices/authSlice";
 
 interface Coupon {
   code: string;
   description: string;
-  type: 'trial' | 'discount';
+  type: "trial" | "discount";
   value: number;
 }
 
 export default function Payment() {
   const [loading, setLoading] = useState(false);
-  const [couponCode, setCouponCode] = useState('');
+  const [couponCode, setCouponCode] = useState("");
   const [isApplying, setIsApplying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const navigate = useNavigate();
@@ -27,39 +33,41 @@ export default function Payment() {
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
-      toast.error('Please enter a coupon code');
+      toast.error("Please enter a coupon code");
       return;
     }
 
     try {
       setIsApplying(true);
-      const response = await api.post('/auth/coupons/validate', { code: couponCode });
+      const response = await api.post("/auth/coupons/validate", {
+        code: couponCode,
+      });
       setAppliedCoupon(response.data);
-      
+
       // Get current user data
-      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-      
-      if (response.data.type === 'trial') {
+      const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+      if (response.data.type === "trial") {
         // Update user data with trial status
         const updatedUser = {
           ...currentUser,
-          subscriptionStatus: 'trial',
-          hasFreeTrialCoupon: true
+          subscriptionStatus: "trial",
+          hasFreeTrialCoupon: true,
         };
-        
+
         // Update Redux store and localStorage
         dispatch(setUser(updatedUser));
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-        
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
         toast.success(`Trial activated for ${response.data.value} days!`);
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
         toast.success(`Coupon applied: ${response.data.description}`);
       }
-      
-      setCouponCode('');
+
+      setCouponCode("");
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to apply coupon');
+      toast.error(error.response?.data?.message || "Failed to apply coupon");
     } finally {
       setIsApplying(false);
     }
@@ -67,48 +75,48 @@ export default function Payment() {
 
   const handleRemoveCoupon = () => {
     setAppliedCoupon(null);
-    toast.success('Coupon removed');
+    toast.success("Coupon removed");
   };
 
   const handleSubscribe = async () => {
     try {
       setLoading(true);
-      
-      if (appliedCoupon?.type === 'trial') {
-        await api.post('/payment/start-trial', {
-          couponCode: appliedCoupon.code
+
+      if (appliedCoupon?.type === "trial") {
+        await api.post("/payment/start-trial", {
+          couponCode: appliedCoupon.code,
         });
         toast.success(`Trial started! Valid for ${appliedCoupon.value} days.`);
-        navigate('/dashboard');
+        navigate("/dashboard");
         return;
       }
-      
-      const response = await api.post('/payment/create-checkout-session', {
-        couponCode: appliedCoupon?.code
+
+      const response = await api.post("/payment/create-checkout-session", {
+        couponCode: appliedCoupon?.code,
       });
-      
+
       window.location.href = response.data.url;
     } catch (error) {
-      console.error('Error:', error);
-      toast.error('Failed to process request');
+      console.error("Error:", error);
+      toast.error("Failed to process request");
     } finally {
       setLoading(false);
     }
   };
 
   const getPrice = () => {
-    if (!appliedCoupon) return '$349/month';
-    if (appliedCoupon.type === 'trial') return 'Free Trial';
+    if (!appliedCoupon) return "$349/month";
+    if (appliedCoupon.type === "trial") return "Free Trial";
     const discountedPrice = 399 * (1 - appliedCoupon.value / 100);
     return `$${discountedPrice.toFixed(2)}/month`;
   };
-  
+
   useEffect(() => {
-    if (appliedCoupon?.type === 'trial') {
+    if (appliedCoupon?.type === "trial") {
       const timer = setTimeout(() => {
-        navigate('/dashboard');
+        navigate("/dashboard");
       }, 1500);
-      
+
       return () => clearTimeout(timer);
     }
   }, [appliedCoupon, navigate]);
@@ -118,17 +126,21 @@ export default function Payment() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Card className="border-2 border-purple-500">
           <CardHeader>
-            <CardTitle className="text-2xl">Complete Your Subscription</CardTitle>
-            <CardDescription>Get started with our service today</CardDescription>
+            <CardTitle className="text-2xl">
+              Complete Your Subscription
+            </CardTitle>
+            <CardDescription>
+              Get started with our service today
+            </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="space-y-6">
             {/* Price Display */}
             <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg p-6">
               <div className="flex items-center justify-between mb-2">
                 <div>
                   <div className="text-3xl font-bold">{getPrice()}</div>
-                  {appliedCoupon?.type === 'trial' && (
+                  {appliedCoupon?.type === "trial" && (
                     <div className="text-sm text-purple-200">
                       {appliedCoupon.value} days free trial
                     </div>
@@ -136,55 +148,12 @@ export default function Payment() {
                 </div>
                 {appliedCoupon && (
                   <div className="bg-white text-purple-600 px-3 py-1 rounded-full text-sm font-medium">
-                    {appliedCoupon.type === 'trial' ? 'Trial Active' : 'Discount Applied'}
+                    {appliedCoupon.type === "trial"
+                      ? "Trial Active"
+                      : "Discount Applied"}
                   </div>
                 )}
               </div>
-            </div>
-
-            {/* Coupon Section */}
-            <div className="border rounded-lg p-4 space-y-4">
-              <div className="flex items-center gap-2">
-                <Tag className="h-5 w-5" />
-                <h3 className="font-semibold">Have a coupon code?</h3>
-              </div>
-              
-              {appliedCoupon ? (
-                <div className="flex items-center justify-between bg-gray-50 p-3 rounded">
-                  <div>
-                    <p className="font-medium">{appliedCoupon.code}</p>
-                    <p className="text-sm text-gray-500">{appliedCoupon.description}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleRemoveCoupon}
-                  >
-                    <X className="h-4 w-4 mr-2" />
-                    Remove
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Enter coupon code"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    className="uppercase"
-                  />
-                  <Button
-                    onClick={handleApplyCoupon}
-                    disabled={isApplying}
-                    variant="outline"
-                  >
-                    {isApplying ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Apply'
-                    )}
-                  </Button>
-                </div>
-              )}
             </div>
 
             {/* Features and Subscribe Button */}
@@ -193,13 +162,13 @@ export default function Payment() {
                 <h3 className="font-semibold text-lg">What's included:</h3>
                 <ul className="space-y-3">
                   {[
-                    'Unlimited QR code generation',
-                    'Real-time review monitoring',
-                    'Customer feedback analytics',
-                    'Review response templates',
-                    'Multi-location support',
-                    'Priority customer support',
-                    'Custom branding options'
+                    "Unlimited QR code generation",
+                    "Real-time review monitoring",
+                    "Customer feedback analytics",
+                    "Review response templates",
+                    "Multi-location support",
+                    "Priority customer support",
+                    "Custom branding options",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <Check className="h-5 w-5 text-green-500" />
@@ -219,10 +188,10 @@ export default function Payment() {
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Processing...
                   </>
+                ) : appliedCoupon?.type === "trial" ? (
+                  `Start ${appliedCoupon.value}-Day Free Trial`
                 ) : (
-                  appliedCoupon?.type === 'trial' 
-                    ? `Start ${appliedCoupon.value}-Day Free Trial` 
-                    : 'Subscribe Now'
+                  "Subscribe Now"
                 )}
               </Button>
 

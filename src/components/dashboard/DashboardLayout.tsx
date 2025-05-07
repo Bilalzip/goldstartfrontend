@@ -1,9 +1,9 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation, Navigate, useNavigate } from "react-router-dom";
-import { 
-  LayoutDashboard, 
-  MessageSquare, 
-  QrCode, 
+import {
+  LayoutDashboard,
+  MessageSquare,
+  QrCode,
   Settings,
   Menu,
   X,
@@ -11,7 +11,7 @@ import {
   Users,
   Home,
   Star,
-  User2Icon
+  User2Icon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -24,42 +24,48 @@ type DashboardLayoutProps = {
   title: string;
 };
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title }) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+  children,
+  title,
+}) => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
   const logout = useLogout();
-  
+
   const handleLogout = async () => {
     await logout();
   };
-  
+
   const getNavigationItems = () => {
     if (user?.isSalesperson) {
       // For salesperson, show a single Dashboard item pointing to referrals
       return [
-        { name: 'Dashboard', href: '/dashboard/referrals', icon: Users },
-        { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-        ...(user?.is_admin ? [{ name: 'Admin', href: '/admin', icon: User2Icon }] : []),
+        { name: "Dashboard", href: "/dashboard/referrals", icon: Users },
+        { name: "Settings", href: "/dashboard/settings", icon: Settings },
+        ...(user?.is_admin
+          ? [{ name: "Admin", href: "/admin", icon: User2Icon }]
+          : []),
       ];
     } else {
       // For non-salesperson users, include all items
       return [
-        { name: 'Dashboard', href: '/dashboard', icon: Home },
-        { name: 'Reviews', href: '/dashboard/reviews', icon: Star },
-        { name: 'QR Codes', href: '/dashboard/qr-code', icon: QrCode },
-        { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-        ...(user?.is_admin ? [{ name: 'Admin', href: '/admin', icon: User2Icon }] : []),
+        { name: "Dashboard", href: "/dashboard", icon: Home },
+        { name: "Reviews", href: "/dashboard/reviews", icon: Star },
+        { name: "QR Codes", href: "/dashboard/qr-code", icon: QrCode },
+        { name: "Settings", href: "/dashboard/settings", icon: Settings },
+        ...(user?.is_admin
+          ? [{ name: "Admin", href: "/admin", icon: User2Icon }]
+          : []),
       ];
     }
   };
-  
 
   // If we're on an admin route but user is not admin, redirect to dashboard
-  if (location.pathname.startsWith('/admin') && !user?.is_admin) {
+  if (location.pathname.startsWith("/admin") && !user?.is_admin) {
     return <Navigate to="/dashboard" replace />;
   }
-  
+
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Mobile sidebar toggle - Update positioning */}
@@ -84,8 +90,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title }) =>
         {/* Sidebar header */}
         <div className="flex h-16 items-center border-b px-6">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center">
-              <span className="text-white font-semibold">GS</span>
+            <div className="h-16 w-16 flex items-center justify-center">
+              <img
+                src="/Logo.png"
+                alt="Gold Star Logo"
+                className="max-h-full max-w-full object-contain"
+              />
             </div>
             <span className="text-lg font-medium">The Gold Star</span>
           </div>
@@ -130,7 +140,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title }) =>
             <div className="flex flex-col">
               <span className="text-sm font-medium">{user?.business_name}</span>
               <span className="text-xs text-gray-500">
-                {user?.is_admin ? 'Administrator' : user?.isSalesperson ? 'Salesperson' : 'Business Owner'}
+                {user?.is_admin
+                  ? "Administrator"
+                  : user?.isSalesperson
+                  ? "Salesperson"
+                  : "Business Owner"}
               </span>
             </div>
           </div>

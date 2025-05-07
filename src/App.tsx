@@ -48,6 +48,7 @@ import PaymentPolicy from "./pages/legal/PaymentPolicy";
 import CookiePolicy from "./pages/legal/CookiePolicy";
 import Disclaimer from "./pages/legal/Disclaimer";
 import ReviewSubmitter from "./pages/legal/ReviewSubmitter";
+import SalespersonSignUp from "./pages/SalespersonSignUp";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/signup/salesperson" element={<SalespersonSignUp />} />
             <Route path="/thank-you" element={<ThankYou />} />
 
             {/* Legal Pages */}

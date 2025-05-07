@@ -16,16 +16,7 @@ interface SignUpFormData {
   email: string;
   password: string;
   confirmPassword: string;
-  isSalesperson: boolean;
 }
-
-type OnboardingFormData = {
-  businessName: string;
-  ownerName: string;
-  phone: string;
-  address: string;
-  googleReviewLink: string;
-};
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -38,7 +29,6 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    isSalesperson: false,
   });
 
   const [legalConsent, setLegalConsent] = useState(false);
@@ -72,7 +62,7 @@ const SignUp = () => {
         signup({
           email: formData.email,
           password: formData.password,
-          isSalesperson: formData.isSalesperson,
+          isSalesperson: false, // Always false for regular users
           referralCode: referralCode || undefined,
         })
       ).unwrap();
@@ -80,13 +70,7 @@ const SignUp = () => {
       localStorage.setItem("user", JSON.stringify(result.user));
       localStorage.setItem("token", result.token);
       toast.success("Account created successfully!");
-
-      if (formData.isSalesperson) {
-        console.log("i come here ");
-        navigate("/dashboard/referrals"); // Correct route for salespersons
-      } else {
-        navigate("/onboarding");
-      }
+      navigate("/onboarding");
     } catch (error: any) {
       toast.error(
         error?.response?.data?.message ||
@@ -157,25 +141,6 @@ const SignUp = () => {
                 />
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isSalesperson"
-                  checked={formData.isSalesperson}
-                  onCheckedChange={(checked) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      isSalesperson: checked as boolean,
-                    }))
-                  }
-                />
-                <label
-                  htmlFor="isSalesperson"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Sign up as a salesperson
-                </label>
-              </div>
-
               {referralCode && (
                 <div className="mb-4">
                   <p className="text-sm text-muted-foreground">
@@ -184,7 +149,7 @@ const SignUp = () => {
                 </div>
               )}
 
-              {/* Legal consent checkbox - added as per requirements */}
+              {/* Legal consent checkbox */}
               <div className="space-y-4 mt-6 border-t pt-6">
                 <div className="flex items-start space-x-3">
                   <Checkbox
@@ -250,6 +215,16 @@ const SignUp = () => {
                   Log in
                 </Link>
               </p>
+
+              <div className="text-center text-sm text-muted-foreground mt-2">
+                <p className="font-medium">Are you a salesperson?</p>
+                <Link
+                  to="/signup/salesperson"
+                  className="text-brand-600 hover:text-brand-700 font-medium"
+                >
+                  Click here to create a salesperson account
+                </Link>
+              </div>
             </form>
           </motion.div>
         </div>

@@ -144,7 +144,7 @@ const SalespersonDashboard = () => {
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">
                 Commissions are calculated at the end of each month and paid out on the 1st of the following month.
-                You'll receive 20% of the monthly subscription fee ($400) for each active referral.
+                You'll receive 20% of the monthly subscription fee ($349) for each active referral.
               </p>
               <div className="bg-muted p-4 rounded-lg">
                 <p className="font-medium">Next Payout Details:</p>

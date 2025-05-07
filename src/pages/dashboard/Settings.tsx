@@ -1,35 +1,44 @@
 import { useState, useEffect } from "react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AlertTriangle, CreditCard, Save } from "lucide-react";
-import { getBusinessProfile, updateBusinessProfile } from '@/services/business';
-import { useNavigate } from 'react-router-dom';
-import api from '@/services/api';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { getBusinessProfile, updateBusinessProfile } from "@/services/business";
+import { useNavigate } from "react-router-dom";
+import api from "@/services/api";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Settings = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
-  
+
   const [formData, setFormData] = useState({
     businessName: "",
     ownerName: "",
     email: "",
     phone: "",
     address: "",
-    googleReviewLink: ""
+    googleReviewLink: "",
   });
 
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [subscriptionStatus, setSubscriptionStatus] = useState<'active' | 'trial' | 'cancelled' | null>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<
+    "active" | "trial" | "cancelled" | null
+  >(null);
   const [trialEndsAt, setTrialEndsAt] = useState<string | null>(null);
 
   // Fetch business profile data when component mounts
@@ -44,10 +53,10 @@ const Settings = () => {
           email: data.email,
           phone: data.phone,
           address: data.address,
-          googleReviewLink: data.google_review_link
+          googleReviewLink: data.google_review_link,
         });
       } catch (error) {
-        console.error('Error fetching business profile:', error);
+        console.error("Error fetching business profile:", error);
         toast({
           title: "Error",
           description: "Failed to load business profile",
@@ -64,11 +73,11 @@ const Settings = () => {
   useEffect(() => {
     const fetchSubscriptionStatus = async () => {
       try {
-        const response = await api.get('/payment/subscription-status');
+        const response = await api.get("/payment/subscription-status");
         setSubscriptionStatus(response.data.status);
         setTrialEndsAt(response.data.trialEndsAt);
       } catch (error) {
-        console.error('Error fetching subscription status:', error);
+        console.error("Error fetching subscription status:", error);
         toast({
           title: "Error",
           description: "Failed to load subscription status",
@@ -82,7 +91,7 @@ const Settings = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSaveProfile = async (e: React.FormEvent) => {
@@ -95,7 +104,7 @@ const Settings = () => {
         description: "Profile updated successfully",
       });
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
       toast({
         title: "Error",
         description: "Failed to update profile",
@@ -107,10 +116,10 @@ const Settings = () => {
   };
 
   const handleCancelSubscription = async () => {
-    if (!confirm('Are you sure you want to cancel your subscription?')) return;
-    
+    if (!confirm("Are you sure you want to cancel your subscription?")) return;
+
     try {
-      await api.post('/payment/cancel-subscription');
+      await api.post("/payment/cancel-subscription");
       toast({
         title: "Success",
         description: "Your subscription has been cancelled",
@@ -118,7 +127,7 @@ const Settings = () => {
       // Refresh the page to show updated status
       window.location.reload();
     } catch (error) {
-      console.error('Error cancelling subscription:', error);
+      console.error("Error cancelling subscription:", error);
       toast({
         title: "Error",
         description: "Failed to cancel subscription",
@@ -129,10 +138,10 @@ const Settings = () => {
 
   const handleUpdatePayment = async () => {
     try {
-      const response = await api.post('/payment/create-update-session');
+      const response = await api.post("/payment/create-update-session");
       window.location.href = response.data.url; // Redirect to Stripe portal
     } catch (error) {
-      console.error('Error updating payment method:', error);
+      console.error("Error updating payment method:", error);
       toast({
         title: "Error",
         description: "Failed to update payment method",
@@ -143,10 +152,10 @@ const Settings = () => {
 
   const handleUpgrade = async () => {
     try {
-      const response = await api.post('/payment/create-checkout-session');
+      const response = await api.post("/payment/create-checkout-session");
       window.location.href = response.data.url; // Redirect to Stripe checkout
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error("Error creating checkout session:", error);
       toast({
         title: "Error",
         description: "Failed to start upgrade process",
@@ -184,7 +193,7 @@ const Settings = () => {
           )} */}
           {/* <TabsTrigger value="notifications">Notifications</TabsTrigger> */}
         </TabsList>
-        
+
         <TabsContent value="profile">
           <Card>
             <form onSubmit={handleSaveProfile}>
@@ -263,9 +272,9 @@ const Settings = () => {
                   />
                   <p className="text-xs text-muted-foreground">
                     How to find your Google review link:
-                    <a 
-                      href="https://support.google.com/business/answer/7035772" 
-                      target="_blank" 
+                    <a
+                      href="https://support.google.com/business/answer/7035772"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-brand-600 ml-1 hover:underline"
                     >
@@ -299,15 +308,19 @@ const Settings = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {subscriptionStatus === 'trial' ? (
+              {subscriptionStatus === "trial" ? (
                 <div className="rounded-lg border p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">
-                        Free Trial <span className="text-blue-600 text-xs font-normal">(Active)</span>
+                        Free Trial{" "}
+                        <span className="text-blue-600 text-xs font-normal">
+                          (Active)
+                        </span>
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        Trial ends on {new Date(trialEndsAt!).toLocaleDateString()}
+                        Trial ends on{" "}
+                        {new Date(trialEndsAt!).toLocaleDateString()}
                       </p>
                     </div>
                     <CreditCard className="h-5 w-5 text-muted-foreground" />
@@ -315,24 +328,27 @@ const Settings = () => {
 
                   <div className="mt-4 pt-4 border-t">
                     <p className="text-sm text-muted-foreground mb-4">
-                      Upgrade now to continue using all features after your trial ends.
+                      Upgrade now to continue using all features after your
+                      trial ends.
                     </p>
-                    <Button 
-                      className="w-full" 
-                      onClick={handleUpgrade}
-                    >
+                    <Button className="w-full" onClick={handleUpgrade}>
                       Upgrade to Premium Plan
                     </Button>
                   </div>
                 </div>
-              ) : subscriptionStatus === 'active' ? (
+              ) : subscriptionStatus === "active" ? (
                 <div className="rounded-lg border p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">
-                        Premium Plan <span className="text-green-600 text-xs font-normal">(Active)</span>
+                        Premium Plan{" "}
+                        <span className="text-green-600 text-xs font-normal">
+                          (Active)
+                        </span>
                       </p>
-                      <p className="text-sm text-muted-foreground">$400.00 per month</p>
+                      <p className="text-sm text-muted-foreground">
+                        $349.00 per month
+                      </p>
                     </div>
                     <CreditCard className="h-5 w-5 text-muted-foreground" />
                   </div>
@@ -340,11 +356,15 @@ const Settings = () => {
                   <div className="mt-4 pt-4 border-t">
                     <div className="flex justify-between mb-2">
                       <span className="text-sm">Next billing date:</span>
-                      <span className="text-sm font-medium">October 15, 2023</span>
+                      <span className="text-sm font-medium">
+                        October 15, 2023
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm">Payment method:</span>
-                      <span className="text-sm font-medium">Visa ending in 4242</span>
+                      <span className="text-sm font-medium">
+                        Visa ending in 4242
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -353,14 +373,14 @@ const Settings = () => {
                   <div className="flex gap-2">
                     <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-yellow-600">No Active Subscription</h4>
+                      <h4 className="font-medium text-yellow-600">
+                        No Active Subscription
+                      </h4>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Your subscription has expired. Upgrade now to restore access to all features.
+                        Your subscription has expired. Upgrade now to restore
+                        access to all features.
                       </p>
-                      <Button 
-                        className="mt-2"
-                        onClick={handleUpgrade}
-                      >
+                      <Button className="mt-2" onClick={handleUpgrade}>
                         Upgrade Now
                       </Button>
                     </div>
@@ -368,13 +388,16 @@ const Settings = () => {
                 </div>
               )}
 
-              {subscriptionStatus === 'active' && (
+              {subscriptionStatus === "active" && (
                 <>
                   <div className="flex flex-col md:flex-row gap-4">
                     <Button variant="outline" onClick={handleUpdatePayment}>
                       Update Payment Method
                     </Button>
-                    <Button variant="outline" onClick={() => navigate('/dashboard/billing-history')}>
+                    <Button
+                      variant="outline"
+                      onClick={() => navigate("/dashboard/billing-history")}
+                    >
                       View Billing History
                     </Button>
                   </div>
@@ -383,14 +406,17 @@ const Settings = () => {
                     <div className="flex gap-2">
                       <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0" />
                       <div>
-                        <h4 className="font-medium text-red-600">Cancel Subscription</h4>
+                        <h4 className="font-medium text-red-600">
+                          Cancel Subscription
+                        </h4>
                         <p className="text-sm text-muted-foreground mt-1">
-                          Canceling your subscription will disable all review collection features
-                          at the end of your current billing period.
+                          Canceling your subscription will disable all review
+                          collection features at the end of your current billing
+                          period.
                         </p>
-                        <Button 
-                          variant="destructive" 
-                          size="sm" 
+                        <Button
+                          variant="destructive"
+                          size="sm"
                           className="mt-2"
                           onClick={handleCancelSubscription}
                         >

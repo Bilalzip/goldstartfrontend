@@ -8,9 +8,24 @@ import CallToAction from "@/components/CallToAction";
 import TestimonialCard from "@/components/TestimonialCard";
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/AnimatedSection";
-import { CheckCircle, ArrowRight, MessageCircle } from "lucide-react";
+import { CheckCircle, ArrowRight, MessageCircle, Play } from "lucide-react";
+import { useRef, useState } from "react";
 
 const Index = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -102,6 +117,55 @@ const Index = () => {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Explainer Video Section - Added directly below the fold */}
+      <section className="py-16 bg-white">
+        <div className="container">
+          <AnimatedSection className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              See How It Works
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Watch our quick video to learn how The Gold Star can transform
+              your business's online reputation.
+            </p>
+          </AnimatedSection>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="relative rounded-xl overflow-hidden shadow-xl">
+              {/* Video poster overlay with play button (for better performance) */}
+              {!isPlaying && (
+                <div
+                  className="absolute inset-0 bg-black/5 flex items-center justify-center cursor-pointer z-10"
+                  onClick={toggleVideo}
+                >
+                  <div className="bg-brand-600 rounded-full p-5 shadow-lg">
+                    <Play className="h-8 w-8 text-white" fill="white" />
+                  </div>
+                </div>
+              )}
+
+              {/* Actual video element - using preload="metadata" for better page load speed */}
+              <video
+                ref={videoRef}
+                className="w-full rounded-xl aspect-video"
+                controls={isPlaying}
+                preload="metadata"
+                onClick={toggleVideo}
+                poster="/video-thumbnail.jpg" // Optional: Add a thumbnail image for the video
+              >
+                <source src="/Instructional_video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </motion.div>
         </div>
       </section>
 
