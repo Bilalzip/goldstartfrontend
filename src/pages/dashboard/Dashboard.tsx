@@ -150,24 +150,6 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Display subscription status indicator if needed */}
-        {user.subscriptionStatus === "pending" && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
-            <h3 className="font-medium">Subscription Required</h3>
-            <p>
-              Your subscription has expired. Some features will be unavailable
-              until you renew.
-            </p>
-            {/* Fix: Properly use Button component with "to" prop */}
-            <Button
-              className="mt-2 bg-red-600 hover:bg-red-700 text-white"
-              onClick={() => (window.location.href = "/dashboard/payment")}
-            >
-              Renew Subscription
-            </Button>
-          </div>
-        )}
-
         {/* Stats Section */}
         {user.isSalesperson ? (
           <div className="grid gap-4 md:grid-cols-3">
