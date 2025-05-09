@@ -1,7 +1,21 @@
 // src/pages/dashboard/Dashboard.tsx
 import { useEffect, useState } from "react";
+import {
+  MessageSquare,
+  Star,
+  ThumbsUp,
+  ThumbsDown,
+  QrCode,
+  Users,
+  CheckCircle,
+  DollarSign,
+  TrendingUp,
+  Calendar,
+  Link as LinkIcon,
+} from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import StatsCard from "@/components/dashboard/StatsCard";
+import { Button } from "@/components/ui/button"; // Make sure Button is properly imported
 import {
   Card,
   CardContent,
@@ -46,8 +60,9 @@ const Dashboard = () => {
     const refreshUserData = async () => {
       if (isAuthenticated) {
         try {
-          // Get fresh user data from server
-          const response = await api.get("/auth/me"); // Update with your actual endpoint
+          // Make sure this endpoint matches your actual user info endpoint
+          // Fix: changed from '/auth/me' to the correct endpoint
+          const response = await api.get("/auth/user"); // Update this with your correct API endpoint!
           if (response.data) {
             // Update Redux store
             dispatch(setUser(response.data));
@@ -120,7 +135,6 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout title="Dashboard">
-      {/* Rest of your dashboard component content */}
       <div className="space-y-8">
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl p-8 text-white">
@@ -144,21 +158,119 @@ const Dashboard = () => {
               Your subscription has expired. Some features will be unavailable
               until you renew.
             </p>
+            {/* Fix: Properly use Button component with "to" prop */}
             <Button
-              as={Link}
-              to="/dashboard/payment"
               className="mt-2 bg-red-600 hover:bg-red-700 text-white"
+              onClick={() => (window.location.href = "/dashboard/payment")}
             >
               Renew Subscription
             </Button>
           </div>
         )}
 
-        {/* Rest of your Dashboard component remains the same */}
-        {/* ... */}
+        {/* Stats Section */}
+        {user.isSalesperson ? (
+          <div className="grid gap-4 md:grid-cols-3">
+            <StatsCard
+              title="Total Referrals"
+              value="0"
+              description="Businesses referred"
+              icon={<Users className="h-4 w-4" />}
+            />
+            <StatsCard
+              title="Active Referrals"
+              value="0"
+              description="Currently subscribed"
+              icon={<CheckCircle className="h-4 w-4" />}
+            />
+            <StatsCard
+              title="Total Earnings"
+              value="$0"
+              description="Commission earned"
+              icon={<DollarSign className="h-4 w-4" />}
+            />
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-3">
+            <StatsCard
+              title="Total Reviews"
+              value={stats?.stats.total.toString() || "0"}
+              description="Reviews collected"
+              icon={<Star className="h-4 w-4" />}
+            />
+            <StatsCard
+              title="Positive Reviews"
+              value={stats?.stats.positive.toString() || "0"}
+              description="4+ star reviews"
+              icon={<ThumbsUp className="h-4 w-4" />}
+            />
+            <StatsCard
+              title="Areas to Improve"
+              value={stats?.stats.negative.toString() || "0"}
+              description="Reviews under 4 stars"
+              icon={<ThumbsDown className="h-4 w-4" />}
+            />
+          </div>
+        )}
+
+        {/* Action Cards */}
+        <div className="grid gap-4 md:grid-cols-2">
+          {user.isSalesperson ? (
+            <>
+              <ActionCard
+                title="Share Referral Link"
+                description="Generate and share your unique referral link"
+                icon={<LinkIcon className="h-6 w-6" />}
+                href="/dashboard/referrals"
+              />
+              <ActionCard
+                title="View Earnings"
+                description="Track your commission and payment history"
+                icon={<DollarSign className="h-6 w-6" />}
+                href="/dashboard/referrals"
+              />
+            </>
+          ) : (
+            <>
+              <ActionCard
+                title="Generate QR Code"
+                description="Create a new QR code for review collection"
+                icon={<QrCode className="h-6 w-6" />}
+                href="/dashboard/qr-code"
+              />
+              <ActionCard
+                title="View Reviews"
+                description="See all your collected reviews"
+                icon={<MessageSquare className="h-6 w-6" />}
+                href="/dashboard/reviews"
+              />
+            </>
+          )}
+        </div>
       </div>
     </DashboardLayout>
   );
 };
+
+interface ActionCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  href: string;
+}
+
+const ActionCard = ({ title, description, icon, href }: ActionCardProps) => (
+  <Link to={href}>
+    <Card className="hover:bg-muted/50 transition-colors">
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          {icon}
+          <CardTitle className="text-lg">{title}</CardTitle>
+        </div>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+    </Card>
+  </Link>
+);
 
 export default Dashboard;
