@@ -367,10 +367,6 @@ const Settings = () => {
                           (Active)
                         </span>
                       </p>
-                      <p className="text-sm text-muted-foreground">
-                        Trial ends on{" "}
-                        {new Date(trialEndsAt!).toLocaleDateString()}
-                      </p>
                     </div>
                     <CreditCard className="h-5 w-5 text-muted-foreground" />
                   </div>
@@ -454,14 +450,6 @@ const Settings = () => {
                           : "the end of your billing period"}
                         .
                       </p>
-                      <Button
-                        className="mt-2"
-                        variant="outline"
-                        onClick={handleManageInStripe}
-                        disabled={isSaving}
-                      >
-                        {isSaving ? "Processing..." : "Reactivate Subscription"}
-                      </Button>
                     </div>
                   </div>
                 </div>
@@ -480,11 +468,11 @@ const Settings = () => {
                         all features.
                       </p>
                       <Button
-                        className="mt-2"
+                        className="w-full"
                         onClick={handleUpgrade}
                         disabled={isSaving}
                       >
-                        {isSaving ? "Processing..." : "Reactivate Subscription"}
+                        {isSaving ? "Processing..." : "Upgrade to Premium Plan"}
                       </Button>
                     </div>
                   </div>
