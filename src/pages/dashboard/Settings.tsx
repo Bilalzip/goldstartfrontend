@@ -37,7 +37,7 @@ const Settings = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [subscriptionStatus, setSubscriptionStatus] = useState<
-    "active" | "trial" | "cancelled" | null
+    "active" | "trial" | "cancelled" | "cancelling" | "pending" | null
   >(null);
   const [trialEndsAt, setTrialEndsAt] = useState<string | null>(null);
   const [subscriptionEndsAt, setSubscriptionEndsAt] = useState<string | null>(
@@ -48,6 +48,20 @@ const Settings = () => {
     cardBrand: string | null;
     displayName: string | null;
   } | null>(null);
+
+  // Check for subscription expired parameter
+  useEffect(() => {
+    // Check if we were redirected here due to an expired subscription
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("expired") === "true") {
+      toast({
+        title: "Subscription Expired",
+        description:
+          "Your subscription has ended. Please renew to continue using premium features.",
+        variant: "destructive",
+      });
+    }
+  }, [toast]);
 
   // Fetch business profile data when component mounts
   useEffect(() => {
@@ -126,43 +140,68 @@ const Settings = () => {
     }
   };
 
-  const handleCancelSubscription = async () => {
-    if (!confirm("Are you sure you want to cancel your subscription?")) return;
+  // Direct cancellation function
+  const handleDirectCancellation = async () => {
+    if (
+      !confirm(
+        "Are you sure you want to cancel your subscription? Your access will continue until the end of your billing period."
+      )
+    ) {
+      return;
+    }
 
     try {
-      await api.post("/payment/cancel-subscription");
+      setIsSaving(true);
+      const response = await api.post("/payment/cancel-subscription");
+
       toast({
         title: "Success",
-        description: "Your subscription has been cancelled",
+        description:
+          "Your subscription has been cancelled and will end at the end of your billing period.",
       });
-      // Refresh the page to show updated status
-      window.location.reload();
+
+      // Refresh subscription status
+      const statusResponse = await api.get("/payment/subscription-status");
+      setSubscriptionStatus(statusResponse.data.status);
     } catch (error) {
       console.error("Error cancelling subscription:", error);
       toast({
         title: "Error",
-        description: "Failed to cancel subscription",
+        description:
+          error.response?.data?.message || "Failed to cancel subscription",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const handleUpdatePayment = async () => {
+  // Stripe portal management function
+  const handleManageInStripe = async () => {
     try {
+      setIsSaving(true);
       const response = await api.post("/payment/create-update-session");
-      window.location.href = response.data.url; // Redirect to Stripe portal
+
+      if (response.data && response.data.url) {
+        window.location.href = response.data.url;
+      } else {
+        throw new Error("Failed to get Stripe portal URL");
+      }
     } catch (error) {
-      console.error("Error updating payment method:", error);
+      console.error("Error accessing Stripe portal:", error);
       toast({
         title: "Error",
-        description: "Failed to update payment method",
+        description: "Failed to access Stripe portal. Please try again later.",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const handleUpgrade = async () => {
     try {
+      setIsSaving(true);
       const response = await api.post("/payment/create-checkout-session");
       window.location.href = response.data.url; // Redirect to Stripe checkout
     } catch (error) {
@@ -172,6 +211,8 @@ const Settings = () => {
         description: "Failed to start upgrade process",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -240,6 +281,7 @@ const Settings = () => {
                       name="email"
                       type="email"
                       value={formData.email}
+                      disabled={true}
                       onChange={handleChange}
                     />
                   </div>
@@ -338,8 +380,12 @@ const Settings = () => {
                       Upgrade now to continue using all features after your
                       trial ends.
                     </p>
-                    <Button className="w-full" onClick={handleUpgrade}>
-                      Upgrade to Premium Plan
+                    <Button
+                      className="w-full"
+                      onClick={handleUpgrade}
+                      disabled={isSaving}
+                    >
+                      {isSaving ? "Processing..." : "Upgrade to Premium Plan"}
                     </Button>
                   </div>
                 </div>
@@ -385,6 +431,64 @@ const Settings = () => {
                     </div>
                   </div>
                 </div>
+              ) : subscriptionStatus === "cancelling" ? (
+                <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
+                  <div className="flex gap-2">
+                    <AlertTriangle className="h-5 w-5 text-orange-600 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-orange-600">
+                        Subscription Ending Soon
+                      </h4>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Your subscription has been cancelled but remains active
+                        until{" "}
+                        {subscriptionEndsAt
+                          ? new Date(subscriptionEndsAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )
+                          : "the end of your billing period"}
+                        .
+                      </p>
+                      <Button
+                        className="mt-2"
+                        variant="outline"
+                        onClick={handleManageInStripe}
+                        disabled={isSaving}
+                      >
+                        {isSaving ? "Processing..." : "Reactivate Subscription"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ) : subscriptionStatus === "cancelled" ||
+                subscriptionStatus === "pending" ? (
+                <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+                  <div className="flex gap-2">
+                    <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-red-600">
+                        Subscription Ended
+                      </h4>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Your subscription has ended and premium features are no
+                        longer available. Upgrade now to restore full access to
+                        all features.
+                      </p>
+                      <Button
+                        className="mt-2"
+                        onClick={handleUpgrade}
+                        disabled={isSaving}
+                      >
+                        {isSaving ? "Processing..." : "Reactivate Subscription"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
                   <div className="flex gap-2">
@@ -394,11 +498,15 @@ const Settings = () => {
                         No Active Subscription
                       </h4>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Your subscription has expired. Upgrade now to restore
-                        access to all features.
+                        You currently don't have an active subscription. Upgrade
+                        now to access all premium features.
                       </p>
-                      <Button className="mt-2" onClick={handleUpgrade}>
-                        Upgrade Now
+                      <Button
+                        className="mt-2"
+                        onClick={handleUpgrade}
+                        disabled={isSaving}
+                      >
+                        {isSaving ? "Processing..." : "Upgrade Now"}
                       </Button>
                     </div>
                   </div>
@@ -407,18 +515,6 @@ const Settings = () => {
 
               {subscriptionStatus === "active" && (
                 <>
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <Button variant="outline" onClick={handleUpdatePayment}>
-                      Update Payment Method
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => navigate("/dashboard/billing-history")}
-                    >
-                      View Billing History
-                    </Button>
-                  </div>
-
                   <div className="rounded-lg border border-red-200 bg-red-50 p-4 mt-6">
                     <div className="flex gap-2">
                       <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0" />
@@ -431,14 +527,16 @@ const Settings = () => {
                           collection features at the end of your current billing
                           period.
                         </p>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          className="mt-2"
-                          onClick={handleCancelSubscription}
-                        >
-                          Cancel Subscription
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-2 mt-2">
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={handleDirectCancellation}
+                            disabled={isSaving}
+                          >
+                            {isSaving ? "Processing..." : "Cancel Subscription"}
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
