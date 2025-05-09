@@ -9,13 +9,10 @@ import {
   Users,
   CheckCircle,
   DollarSign,
-  TrendingUp,
-  Calendar,
-  Link as LinkIcon,
 } from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import StatsCard from "@/components/dashboard/StatsCard";
-import { Button } from "@/components/ui/button"; // Make sure Button is properly imported
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -60,9 +57,8 @@ const Dashboard = () => {
     const refreshUserData = async () => {
       if (isAuthenticated) {
         try {
-          // Make sure this endpoint matches your actual user info endpoint
-          // Fix: changed from '/auth/me' to the correct endpoint
-          const response = await api.get("/auth/user"); // Update this with your correct API endpoint!
+          // Using the correct endpoint now
+          const response = await api.get("/auth/me");
           if (response.data) {
             // Update Redux store
             dispatch(setUser(response.data));
@@ -128,10 +124,6 @@ const Dashboard = () => {
       </DashboardLayout>
     );
   }
-
-  const positivePercentage = stats?.stats.total
-    ? ((stats.stats.positive / stats.stats.total) * 100).toFixed(1)
-    : "0";
 
   return (
     <DashboardLayout title="Dashboard">
@@ -202,7 +194,7 @@ const Dashboard = () => {
               <ActionCard
                 title="Share Referral Link"
                 description="Generate and share your unique referral link"
-                icon={<LinkIcon className="h-6 w-6" />}
+                icon={<Link className="h-6 w-6" />}
                 href="/dashboard/referrals"
               />
               <ActionCard
