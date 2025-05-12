@@ -170,7 +170,7 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
-            <Route path="/review/:businessId" element={<Review />} />
+            <Route path="/review/:urlId" element={<Review />} />
             <Route path="/survey/:businessId" element={<Survey />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
