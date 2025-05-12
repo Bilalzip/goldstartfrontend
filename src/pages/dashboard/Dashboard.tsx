@@ -59,11 +59,15 @@ const Dashboard = () => {
         try {
           // Using the correct endpoint now
           const response = await api.get("/auth/me");
-          if (response.data) {
+          if (response.data && response.data.user) {
+            // Extract the user object from the response
+            const userData = response.data.user;
+
             // Update Redux store
-            dispatch(setUser(response.data));
+            dispatch(setUser(userData));
+
             // Update localStorage
-            localStorage.setItem("user", JSON.stringify(response.data));
+            localStorage.setItem("user", JSON.stringify(userData));
           }
         } catch (error) {
           console.error("Error refreshing user data:", error);
