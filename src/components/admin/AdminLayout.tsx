@@ -1,32 +1,32 @@
-import { useState } from 'react';
-import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
-import { 
-  Building2, 
-  Users, 
+import { useState } from "react";
+import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
+import {
+  Building2,
+  Users,
   LineChart,
   Menu,
   X,
   Home,
   ArrowLeft,
   LogOut,
-  Ticket
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useLogout } from '@/utils/auth';
+  Ticket,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useLogout } from "@/utils/auth";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const logout = useLogout();
-  
+
   const navigationItems = [
-    { name: 'Overview', href: '/admin', icon: Home },
-    { name: 'Businesses', href: '/admin/businesses', icon: Building2 },
-    { name: 'Salespeople', href: '/admin/salespeople', icon: Users },
-    { name: 'Financial', href: '/admin/financial', icon: LineChart },
-    { name: 'Coupons', href: '/admin/coupons', icon: Ticket }
+    { name: "Overview", href: "/admin", icon: Home },
+    { name: "Businesses", href: "/admin/businesses", icon: Building2 },
+    { name: "Salespeople", href: "/admin/salespeople", icon: Users },
+    { name: "Financial", href: "/admin/financial", icon: LineChart },
+    // { name: 'Coupons', href: '/admin/coupons', icon: Ticket }
   ];
 
   const handleLogout = async () => {
@@ -78,7 +78,7 @@ export default function AdminLayout() {
             <Button
               variant="outline"
               className="w-full justify-start text-gray-700 hover:text-brand-600"
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate("/dashboard")}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Dashboard
@@ -110,7 +110,7 @@ export default function AdminLayout() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate("/dashboard")}
                 className="mr-2"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -138,7 +138,8 @@ export default function AdminLayout() {
             {/* Page header */}
             <div className="mb-8">
               <h1 className="text-2xl font-semibold text-gray-900">
-                {navigationItems.find(item => item.href === location.pathname)?.name || 'Admin'}
+                {navigationItems.find((item) => item.href === location.pathname)
+                  ?.name || "Admin"}
               </h1>
             </div>
 

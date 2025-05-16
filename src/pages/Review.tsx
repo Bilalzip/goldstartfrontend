@@ -16,7 +16,7 @@ const Review = () => {
   const [business, setBusiness] = useState<{
     businessId: number;
     businessName: string;
-    google_review_link: string;
+    googleReviewLink: string;
   } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,9 +48,9 @@ const Review = () => {
         comment,
       });
 
-      if (rating >= 4 && business?.google_review_link) {
+      if (rating >= 4 && business?.googleReviewLink) {
         // Redirect to Google Review
-        window.location.href = business.google_review_link;
+        window.location.href = business.googleReviewLink;
       } else {
         // Redirect to survey - now using businessId from the response
         navigate(

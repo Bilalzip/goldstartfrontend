@@ -85,7 +85,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("User subscriptionStatus:", user.subscriptionStatus);
       if (user.subscriptionStatus === "pending") {
         toast.success("Subscribe to continue using the app.");
       }

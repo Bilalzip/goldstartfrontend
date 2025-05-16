@@ -190,7 +190,7 @@ const App = () => (
               <Route path="businesses/:id" element={<BusinessDetails />} />
               <Route path="salespeople" element={<SalespeopleList />} />
               <Route path="financial" element={<FinancialOverview />} />
-              <Route path="coupons" element={<CouponManager />} />
+              {/* <Route path="coupons" element={<CouponManager />} /> */}
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

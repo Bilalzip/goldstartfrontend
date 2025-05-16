@@ -43,7 +43,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       return [
         { name: "Dashboard", href: "/dashboard/referrals", icon: Users },
         { name: "Settings", href: "/dashboard/settings", icon: Settings },
-        ...(user?.is_admin
+        ...(user?.isAdmin
           ? [{ name: "Admin", href: "/admin", icon: User2Icon }]
           : []),
       ];
@@ -54,7 +54,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         { name: "Reviews", href: "/dashboard/reviews", icon: Star },
         { name: "QR Codes", href: "/dashboard/qr-code", icon: QrCode },
         { name: "Settings", href: "/dashboard/settings", icon: Settings },
-        ...(user?.is_admin
+        ...(user?.isAdmin
           ? [{ name: "Admin", href: "/admin", icon: User2Icon }]
           : []),
       ];
@@ -62,7 +62,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   };
 
   // If we're on an admin route but user is not admin, redirect to dashboard
-  if (location.pathname.startsWith("/admin") && !user?.is_admin) {
+  if (location.pathname.startsWith("/admin") && !user?.isAdmin) {
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -140,7 +140,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             <div className="flex flex-col">
               <span className="text-sm font-medium">{user?.business_name}</span>
               <span className="text-xs text-gray-500">
-                {user?.is_admin
+                {user?.isAdmin
                   ? "Administrator"
                   : user?.isSalesperson
                   ? "Salesperson"
