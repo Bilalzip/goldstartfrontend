@@ -1,36 +1,34 @@
-import { QrCode, Star, ArrowUpRight, Mail } from "lucide-react";
+import { QrCode, Star, Users, TrendingUp } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { motion } from "framer-motion";
 
 const steps = [
   {
     icon: <QrCode className="h-10 w-10" />,
-    title: "Customer scans a QR code or receives a link by email",
+    title: "Scan the QR Code",
     description:
-      "Customers access your review form through a custom QR code you place at your business or via email links you send.",
+      "Your customer scans your custom Gold Star QR code using their phone — quick and easy, no app needed.",
     delay: 0.1,
   },
   {
     icon: <Star className="h-10 w-10" />,
-    title: "They leave a 1-5 star review",
+    title: "Rate the Experience",
     description:
-      "Customers provide honest feedback by rating their experience from 1 to 5 stars on a simple, user-friendly form.",
+      "They choose a rating from 1 to 5 stars to reflect their experience.",
     delay: 0.2,
   },
   {
-    icon: <ArrowUpRight className="h-10 w-10" />,
-    title:
-      "If they give 4 stars or more, they're redirected to your Google review page",
+    icon: <Users className="h-10 w-10" />,
+    title: "Share Publicly or Privately",
     description:
-      "Satisfied customers are automatically guided to leave their positive feedback on your public Google Business profile.",
+      "After selecting a rating, customers can choose to post their review publicly on Google, or submit it privately to the business. Happy customers are more likely to go public — while others often choose to leave their feedback privately.",
     delay: 0.3,
   },
   {
-    icon: <Mail className="h-10 w-10" />,
-    title:
-      "If they give below 4 stars, their feedback is sent to you privately",
+    icon: <TrendingUp className="h-10 w-10" />,
+    title: "Build Trust and Reputation",
     description:
-      "Less than glowing reviews come directly to you, allowing you to address concerns without harming your public reputation.",
+      "Public reviews help boost your online visibility, while private feedback gives you a chance to improve behind the scenes — all through one simple system.",
     delay: 0.4,
   },
 ];
@@ -39,10 +37,13 @@ const HowItWorks = () => {
   return (
     <section className="section container text-center">
       <AnimatedSection>
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">⭐ How It Works</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          ⭐ How It Works – The Gold Star in 4 Simple Steps
+        </h2>
         <p className="text-muted-foreground text-lg mb-12 max-w-2xl mx-auto">
-          Our simple 4-step process helps you collect more positive reviews
-          while keeping negative feedback private.
+          Our transparent system gives customers the choice to share their
+          feedback publicly or privately — building trust and improving your
+          business.
         </p>
       </AnimatedSection>
 
@@ -68,8 +69,8 @@ const HowItWorks = () => {
       </div>
 
       <p className="text-lg mt-8 font-medium text-center max-w-2xl mx-auto">
-        It's the easiest way to grow your 5-star reviews and handle complaints
-        in private.
+        A simple, transparent system that respects customer choice while helping
+        your business grow.
       </p>
     </section>
   );

@@ -8,24 +8,9 @@ import CallToAction from "@/components/CallToAction";
 import TestimonialCard from "@/components/TestimonialCard";
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/AnimatedSection";
-import { CheckCircle, ArrowRight, MessageCircle, Play } from "lucide-react";
-import { useRef, useState } from "react";
+import { CheckCircle, ArrowRight, MessageCircle } from "lucide-react";
 
 const Index = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -51,8 +36,9 @@ const Index = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
                 <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
-                  Handle tough criticism privately & send happy customers to
-                  your Google Reviews.
+                  A simple, QR code-driven feedback system that lets customers
+                  choose to share reviews publicly or privately — transparent
+                  and Google-compliant.
                 </p>
               </motion.div>
 
@@ -69,7 +55,7 @@ const Index = () => {
                   className="bg-brand-600 hover:bg-brand-700 transition-colors"
                 >
                   <Link to="/signup" className="flex items-center gap-2">
-                    Get Started - $349/month
+                    Get Started - $44.99/month
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -120,55 +106,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Explainer Video Section - Added directly below the fold */}
-      <section className="py-16 bg-white">
-        <div className="container">
-          <AnimatedSection className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              See How It Works
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Watch our quick video to learn how The Gold Star can transform
-              your business's online reputation.
-            </p>
-          </AnimatedSection>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="relative rounded-xl overflow-hidden shadow-xl">
-              {/* Video poster overlay with play button (for better performance) */}
-              {!isPlaying && (
-                <div
-                  className="absolute inset-0 bg-black/5 flex items-center justify-center cursor-pointer z-10"
-                  onClick={toggleVideo}
-                >
-                  <div className="bg-brand-600 rounded-full p-5 shadow-lg">
-                    <Play className="h-8 w-8 text-white" fill="white" />
-                  </div>
-                </div>
-              )}
-
-              {/* Actual video element - using preload="metadata" for better page load speed */}
-              <video
-                ref={videoRef}
-                className="w-full rounded-xl aspect-video"
-                controls={isPlaying}
-                preload="metadata"
-                onClick={toggleVideo}
-                poster="/video-thumbnail.jpg" // Optional: Add a thumbnail image for the video
-              >
-                <source src="/Instructional_video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Feature Blocks */}
       <section className="section container">
         <AnimatedSection className="text-center mb-16">
@@ -192,12 +129,12 @@ const Index = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">
-                  Strategically Filter Reviews
+                  Customer Choice System
                 </h3>
                 <p className="text-muted-foreground">
-                  Automatically direct satisfied customers to leave public
-                  Google reviews while channeling constructive feedback
-                  privately to your team.
+                  Customers scan a custom QR code, rate their experience, and
+                  choose whether to leave their review publicly on Google or
+                  submit it privately to the business.
                 </p>
               </div>
             </div>

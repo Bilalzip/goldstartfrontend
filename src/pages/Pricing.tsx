@@ -73,7 +73,7 @@ const Pricing = () => {
                 <div className="text-center">
                   <div className="mb-2">
                     <span className="text-2xl text-gray-400 line-through">
-                      CAD $399
+                      CAD $75
                     </span>
                     <span className="ml-2 text-red-500 font-semibold">
                       Limited Time Offer
@@ -81,14 +81,14 @@ const Pricing = () => {
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-5xl font-bold text-brand-600">
-                      CAD $349
+                      CAD $44.99
                     </span>
                     <span className="text-xl text-muted-foreground">
                       /month
                     </span>
                   </div>
                   <p className="text-muted-foreground mt-2">
-                    That's only about $11.63/day
+                    That's only about $1.50/day
                   </p>
                   <p className="text-sm text-red-500 font-medium mt-1">
                     *Offer ends soon
@@ -122,7 +122,7 @@ const Pricing = () => {
                 >
                   <Link to="/signup">
                     Start building your 5-star reputation today for just
-                    $11.63/day!
+                    $1.50/day!
                   </Link>
                 </Button>
                 <div className="mt-3 space-y-1">
@@ -181,7 +181,7 @@ const Pricing = () => {
               <tbody>
                 <tr className="border-b">
                   <td className="p-5">
-                    Filter negative reviews before they go public
+                    Customer choice for public or private feedback
                   </td>
                   <td className="p-5 text-center text-brand-600">✓</td>
                   <td className="p-5 text-center">✗</td>
@@ -192,7 +192,9 @@ const Pricing = () => {
                   <td className="p-5 text-center">✗</td>
                 </tr>
                 <tr className="border-b">
-                  <td className="p-5">Automated Google review redirection</td>
+                  <td className="p-5">
+                    Transparent feedback collection process
+                  </td>
                   <td className="p-5 text-center text-brand-600">✓</td>
                   <td className="p-5 text-center">✗</td>
                 </tr>

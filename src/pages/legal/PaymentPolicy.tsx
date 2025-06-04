@@ -32,10 +32,10 @@ const PaymentPolicy = () => {
               <h2 className="text-2xl font-bold mb-4">Subscription Pricing</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  Standard subscription fee: CAD $349/month per business
+                  Standard subscription fee: CAD $44.99/month per business
                   location.
                 </li>
-                <li>Equivalent to approximately $11.63/day.</li>
+                <li>Equivalent to approximately $1.50/day.</li>
                 <li>
                   Payments are processed via Stripe using a secure and encrypted
                   connection.

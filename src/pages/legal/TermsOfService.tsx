@@ -70,7 +70,7 @@ const TermsOfService = () => {
               </h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  Subscription fee: CAD $349/month per business location
+                  Subscription fee: CAD $44.99/month per business location
                   (subject to change).
                 </li>
                 <li>Payments are securely processed via Stripe.</li>

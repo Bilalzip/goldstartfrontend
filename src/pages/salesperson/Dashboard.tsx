@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Copy, DollarSign, Link, Users, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,11 +31,18 @@ const MOCK_REFERRALS = [
 
 const SalespersonDashboard = () => {
   const { toast } = useToast();
-  const [referralLink] = useState("https://reputationrocket.com/signup?ref=SP123");
-  
-  const totalCommission = MOCK_REFERRALS.reduce((sum, ref) => sum + ref.commission, 0);
-  const activeReferrals = MOCK_REFERRALS.filter(ref => ref.status === "active").length;
-  
+  const [referralLink] = useState(
+    "https://reputationrocket.com/signup?ref=SP123"
+  );
+
+  const totalCommission = MOCK_REFERRALS.reduce(
+    (sum, ref) => sum + ref.commission,
+    0
+  );
+  const activeReferrals = MOCK_REFERRALS.filter(
+    (ref) => ref.status === "active"
+  ).length;
+
   const copyReferralLink = () => {
     navigator.clipboard.writeText(referralLink);
     toast({
@@ -48,7 +54,7 @@ const SalespersonDashboard = () => {
   return (
     <div className="space-y-8">
       <h1 className="text-2xl font-bold">Salesperson Dashboard</h1>
-      
+
       {/* Stats Overview */}
       <div className="grid gap-4 md:grid-cols-4">
         <StatsCard
@@ -92,7 +98,8 @@ const SalespersonDashboard = () => {
               </Button>
             </div>
             <p className="text-sm text-muted-foreground">
-              Share this link with businesses to earn commission on their subscriptions
+              Share this link with businesses to earn commission on their
+              subscriptions
             </p>
           </CardContent>
         </Card>
@@ -113,7 +120,9 @@ const SalespersonDashboard = () => {
                 >
                   <div>
                     <h3 className="font-medium">{referral.businessName}</h3>
-                    <p className="text-sm text-muted-foreground">{referral.ownerName}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {referral.ownerName}
+                    </p>
                   </div>
                   <div className="text-right">
                     <p className="font-medium">${referral.commission}</p>
@@ -124,7 +133,8 @@ const SalespersonDashboard = () => {
                           : "text-orange-600"
                       }`}
                     >
-                      {referral.status.charAt(0).toUpperCase() + referral.status.slice(1)}
+                      {referral.status.charAt(0).toUpperCase() +
+                        referral.status.slice(1)}
                     </span>
                   </div>
                 </div>
@@ -143,13 +153,13 @@ const SalespersonDashboard = () => {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">
-                Commissions are calculated at the end of each month and paid out on the 1st of the following month.
-                You'll receive 20% of the monthly subscription fee ($349) for each active referral.
+                Commissions are calculated at the end of each month and paid out
+                on the 1st of the following month. You'll receive 20% of the
+                monthly subscription fee ($44.99) for each active referral.
               </p>
               <div className="bg-muted p-4 rounded-lg">
                 <p className="font-medium">Next Payout Details:</p>
                 <ul className="list-disc list-inside text-sm space-y-1 mt-2">
-                  <li>Payment Date: March 1, 2024</li>
                   <li>Expected Amount: ${totalCommission}</li>
                   <li>Active Referrals: {activeReferrals}</li>
                 </ul>

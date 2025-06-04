@@ -396,7 +396,7 @@ const Settings = () => {
                         </span>
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        $349.00 per month
+                        $44.99 per month
                       </p>
                     </div>
                     <CreditCard className="h-5 w-5 text-muted-foreground" />
