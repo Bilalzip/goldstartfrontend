@@ -39,7 +39,7 @@ const Review = () => {
 
   useEffect(() => {
     if (rating > 0) {
-      setIsPublicReview(rating <= 3);
+      setIsPublicReview(rating >= 4);
     }
   }, [rating]);
 
@@ -100,7 +100,7 @@ const Review = () => {
 
   const getStarBasedMessage = () => {
     if (rating >= 1 && rating <= 3) {
-      return "We're sorry your experience wasn't ideal. If you'd prefer to share your feedback privately, leave the box checked. But if you want to help others by posting publicly, feel free to uncheck it — your voice matters either way.";
+      return "We’re sorry your experience wasn’t ideal. If you’d prefer to share your feedback privately, leave the box unchecked. But if you want to share with others by posting publicly, feel free to check the box. — your voice matters either way.";
     } else if (rating >= 4 && rating <= 5) {
       return "Thanks for the great rating! We'd really appreciate if you shared your experience publicly — it helps this business grow and lets others know what to expect.";
     }

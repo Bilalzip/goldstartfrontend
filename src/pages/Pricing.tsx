@@ -56,7 +56,7 @@ const Pricing = () => {
           <Card className="overflow-hidden border-2 border-brand-200 shadow-xl relative">
             {/* Add a "Special Offer" banner */}
             <div className="absolute top-5 right-5 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold animate-pulse">
-              Save $50 Today!
+              Save $30 Today!
             </div>
 
             <div className="bg-brand-600 text-white py-6 px-8 text-center">
@@ -127,7 +127,7 @@ const Pricing = () => {
                 </Button>
                 <div className="mt-3 space-y-1">
                   <p className="text-sm text-red-500 font-medium">
-                    Save $50 when you sign up today!
+                    Save $30 when you sign up today!
                   </p>
                 </div>
               </div>
