@@ -8,7 +8,7 @@ import CallToAction from "@/components/CallToAction";
 import TestimonialCard from "@/components/TestimonialCard";
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/AnimatedSection";
-import { CheckCircle, ArrowRight, MessageCircle } from "lucide-react";
+import { CheckCircle, ArrowRight, MessageCircle, Play } from "lucide-react";
 
 const Index = () => {
   return (
@@ -87,23 +87,107 @@ const Index = () => {
               </motion.div>
             </div>
 
+            {/* HOW IT WORKS Video - Replacing the purple image */}
             <motion.div
               className="flex-1"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              <div className="relative">
+              <div className="relative group cursor-pointer">
                 <div className="absolute -z-10 inset-0 bg-gradient-to-r from-brand-200/30 to-brand-500/30 rounded-lg transform rotate-3"></div>
-                <img
-                  src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&auto=format&fit=crop"
-                  alt="Dashboard preview"
-                  className="rounded-lg shadow-xl w-full object-cover animate-float"
-                />
+                <div className="relative rounded-lg shadow-xl w-full overflow-hidden animate-float">
+                  <video
+                    className="w-full h-auto object-cover rounded-lg"
+                    poster="/How It Works Thumbnail.jpg"
+                    controls
+                    preload="metadata"
+                  >
+                    <source src="/How It Works.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                    <div className="bg-white/90 rounded-full p-4">
+                      <Play
+                        className="h-8 w-8 text-brand-600 ml-1"
+                        fill="currentColor"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 text-center">
+                  <h3 className="text-lg font-semibold text-brand-700">
+                    How It Works
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    See our system in action
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
+      </section>
+
+      {/* HOW TO SIGN UP Video Section */}
+      <section className="section container">
+        <AnimatedSection className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Get Started?
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            Watch this quick guide to see how easy it is to set up your account
+            and start collecting better reviews.
+          </p>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="relative group cursor-pointer">
+              <div className="relative rounded-xl shadow-2xl overflow-hidden bg-white p-2">
+                <video
+                  className="w-full h-auto object-cover rounded-lg"
+                  poster="/How To Sign Up-Cover.jpg"
+                  controls
+                  preload="metadata"
+                >
+                  <source src="/How To Sign Up.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Play button overlay */}
+                <div className="absolute inset-2 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                  <div className="bg-white/90 rounded-full p-6">
+                    <Play
+                      className="h-12 w-12 text-brand-600 ml-1"
+                      fill="currentColor"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 text-center">
+                <h3 className="text-xl font-semibold text-brand-700 mb-2">
+                  How to Sign Up
+                </h3>
+                <p className="text-muted-foreground">
+                  Quick setup guide to get you started in minutes
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA after signup video */}
+          <div className="mt-12">
+            <Button
+              size="lg"
+              asChild
+              className="bg-brand-600 hover:bg-brand-700 transition-colors"
+            >
+              <Link to="/signup" className="flex items-center gap-2">
+                Start Your Free Trial Now
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </AnimatedSection>
       </section>
 
       {/* Feature Blocks */}
