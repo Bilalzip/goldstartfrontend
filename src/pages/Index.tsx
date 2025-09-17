@@ -103,16 +103,6 @@ const Index = () => {
                     controls
                     preload="metadata"
                     playsInline
-                    onError={(e) => {
-                      console.error("Video error:", e);
-                      console.error("Video src:", e.target.src);
-                      console.error("Video ready state:", e.target.readyState);
-                    }}
-                    onCanPlay={() => console.log("Video can play")}
-                    onLoadedData={() => console.log("Video data loaded")}
-                    onLoadStart={() => console.log("Video loading started")}
-                    onPlay={() => console.log("Video started playing")}
-                    onPause={() => console.log("Video paused")}
                   >
                     <source src="/How It Works.mp4" type="video/mp4" />
                     <source src="./How It Works.mp4" type="video/mp4" />
@@ -153,21 +143,6 @@ const Index = () => {
                   controls
                   preload="metadata"
                   playsInline
-                  onError={(e) => {
-                    console.error("Signup video error:", e);
-                    console.error("Signup video src:", e.target.src);
-                    console.error(
-                      "Signup video ready state:",
-                      e.target.readyState
-                    );
-                  }}
-                  onCanPlay={() => console.log("Signup video can play")}
-                  onLoadedData={() => console.log("Signup video data loaded")}
-                  onLoadStart={() =>
-                    console.log("Signup video loading started")
-                  }
-                  onPlay={() => console.log("Signup video started playing")}
-                  onPause={() => console.log("Signup video paused")}
                 >
                   <source src="/How To Sign Up.mp4" type="video/mp4" />
                   <source src="./How To Sign Up.mp4" type="video/mp4" />
