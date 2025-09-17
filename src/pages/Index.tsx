@@ -94,33 +94,30 @@ const Index = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              <div className="relative group cursor-pointer">
+              <div className="relative">
                 <div className="absolute -z-10 inset-0 bg-gradient-to-r from-brand-200/30 to-brand-500/30 rounded-lg transform rotate-3"></div>
                 <div className="relative rounded-lg shadow-xl w-full overflow-hidden animate-float">
                   <video
                     className="w-full h-auto object-cover rounded-lg"
-                    poster="./How%20It%20Works%20Thumbnail.jpg"
+                    poster="/How It Works Thumbnail.jpg"
                     controls
                     preload="metadata"
                     playsInline
-                    muted
-                    onError={(e) => console.error("Video error:", e)}
+                    onError={(e) => {
+                      console.error("Video error:", e);
+                      console.error("Video src:", e.target.src);
+                      console.error("Video ready state:", e.target.readyState);
+                    }}
+                    onCanPlay={() => console.log("Video can play")}
+                    onLoadedData={() => console.log("Video data loaded")}
                     onLoadStart={() => console.log("Video loading started")}
+                    onPlay={() => console.log("Video started playing")}
+                    onPause={() => console.log("Video paused")}
                   >
-                    <source src="./How%20It%20Works.mp4" type="video/mp4" />
                     <source src="/How It Works.mp4" type="video/mp4" />
-                    <source src="/public/How It Works.mp4" type="video/mp4" />
+                    <source src="./How It Works.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  {/* Play button overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                    <div className="bg-white/90 rounded-full p-4">
-                      <Play
-                        className="h-8 w-8 text-brand-600 ml-1"
-                        fill="currentColor"
-                      />
-                    </div>
-                  </div>
                 </div>
                 <div className="mt-4 text-center">
                   <h3 className="text-lg font-semibold text-brand-700">
@@ -148,34 +145,34 @@ const Index = () => {
           </p>
 
           <div className="max-w-4xl mx-auto">
-            <div className="relative group cursor-pointer">
+            <div className="relative">
               <div className="relative rounded-xl shadow-2xl overflow-hidden bg-white p-2">
                 <video
                   className="w-full h-auto object-cover rounded-lg"
-                  poster="./How%20To%20Sign%20Up-Cover.jpg"
+                  poster="/How To Sign Up-Cover.jpg"
                   controls
                   preload="metadata"
                   playsInline
-                  muted
-                  onError={(e) => console.error("Signup video error:", e)}
+                  onError={(e) => {
+                    console.error("Signup video error:", e);
+                    console.error("Signup video src:", e.target.src);
+                    console.error(
+                      "Signup video ready state:",
+                      e.target.readyState
+                    );
+                  }}
+                  onCanPlay={() => console.log("Signup video can play")}
+                  onLoadedData={() => console.log("Signup video data loaded")}
                   onLoadStart={() =>
                     console.log("Signup video loading started")
                   }
+                  onPlay={() => console.log("Signup video started playing")}
+                  onPause={() => console.log("Signup video paused")}
                 >
-                  <source src="./How%20To%20Sign%20Up.mp4" type="video/mp4" />
                   <source src="/How To Sign Up.mp4" type="video/mp4" />
-                  <source src="/public/How To Sign Up.mp4" type="video/mp4" />
+                  <source src="./How To Sign Up.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-                {/* Play button overlay */}
-                <div className="absolute inset-2 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                  <div className="bg-white/90 rounded-full p-6">
-                    <Play
-                      className="h-12 w-12 text-brand-600 ml-1"
-                      fill="currentColor"
-                    />
-                  </div>
-                </div>
               </div>
               <div className="mt-6 text-center">
                 <h3 className="text-xl font-semibold text-brand-700 mb-2">
