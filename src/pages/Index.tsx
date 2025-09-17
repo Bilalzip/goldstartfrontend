@@ -99,11 +99,17 @@ const Index = () => {
                 <div className="relative rounded-lg shadow-xl w-full overflow-hidden animate-float">
                   <video
                     className="w-full h-auto object-cover rounded-lg"
-                    poster="/How It Works Thumbnail.jpg"
+                    poster="./How%20It%20Works%20Thumbnail.jpg"
                     controls
                     preload="metadata"
+                    playsInline
+                    muted
+                    onError={(e) => console.error("Video error:", e)}
+                    onLoadStart={() => console.log("Video loading started")}
                   >
+                    <source src="./How%20It%20Works.mp4" type="video/mp4" />
                     <source src="/How It Works.mp4" type="video/mp4" />
+                    <source src="/public/How It Works.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                   {/* Play button overlay */}
@@ -146,11 +152,19 @@ const Index = () => {
               <div className="relative rounded-xl shadow-2xl overflow-hidden bg-white p-2">
                 <video
                   className="w-full h-auto object-cover rounded-lg"
-                  poster="/How To Sign Up-Cover.jpg"
+                  poster="./How%20To%20Sign%20Up-Cover.jpg"
                   controls
                   preload="metadata"
+                  playsInline
+                  muted
+                  onError={(e) => console.error("Signup video error:", e)}
+                  onLoadStart={() =>
+                    console.log("Signup video loading started")
+                  }
                 >
+                  <source src="./How%20To%20Sign%20Up.mp4" type="video/mp4" />
                   <source src="/How To Sign Up.mp4" type="video/mp4" />
+                  <source src="/public/How To Sign Up.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 {/* Play button overlay */}
