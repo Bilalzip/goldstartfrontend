@@ -1,69 +1,85 @@
-# Welcome to your Lovable project
+# The Gold Star
 
-## Project info
+A simple, **QR code–driven customer feedback system** that lets customers choose to share reviews **publicly or privately** — designed to be **transparent and Google-compliant**.  
+This software is trusted by thousands of businesses.
 
-**URL**: https://lovable.dev/projects/a5b3f5e6-d2f0-410a-b917-352f25ac4024
+---
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- **QR-Code Feedback** – Customers scan a code to share quick feedback.
+- **Public or Private Reviews** – Users can choose whether their feedback is visible publicly or sent privately to the business.
+- **Google-Compliant Publishing** – Fully compliant with Google’s review policies.
+- **Modern UI/UX** – Smooth animations with [Framer Motion](https://www.framer.com/motion/) and responsive layouts using [Tailwind CSS](https://tailwindcss.com/).
+- **Fast & Lightweight Frontend** – Built with [React + Vite](https://vitejs.dev/) for blazing-fast performance.
+- **Secure Backend** – [Express.js](https://expressjs.com/) API with SQL persistence.
+- **Admin Dashboard** – Manage reviews, view analytics, and moderate submissions.
+- **Scalable Deployment** – Hosted on [Vercel](https://vercel.com/).
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a5b3f5e6-d2f0-410a-b917-352f25ac4024) and start prompting.
+## 🛠️ Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+| Layer          | Technology Used              |
+|----------------|------------------------------|
+| Frontend       | React (Vite), Tailwind CSS, Framer Motion |
+| Backend        | Express.js, REST APIs        |
+| Database       | SQL (Postgres/MySQL compatible) |
+| State & Forms  | React Hook Form, Zod, Redux Toolkit |
+| Routing        | React Router DOM             |
+| UI Components  | Radix-UI, Shadcn Components  |
+| Animations     | Framer Motion                |
+| Deployment     | Vercel                        |
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 📦 Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository**
+   ```bash
+   git clone <repo-url>
+   cd vite_react_shadcn_ts
 
-Follow these steps:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Install dependencies
 
-# Step 3: Install the necessary dependencies.
-npm i
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+
+Set up environment variables
+Create a .env file in the root directory and configure:
+
+DATABASE_URL=your_database_url
+API_KEY=your_api_key
+
+
+(Adjust as needed for your backend and third-party services.)
+
+Run the development server
+
 npm run dev
-```
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Build for production
 
-**Use GitHub Codespaces**
+npm run build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+Preview production build locally
 
-This project is built with .
+npm run preview
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a5b3f5e6-d2f0-410a-b917-352f25ac4024) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+📂 Project Structure
+vite_react_shadcn_ts/
+├── public/            # Static assets
+├── src/
+│   ├── components/    # UI components
+│   ├── pages/         # Page-level components
+│   ├── hooks/         # Custom hooks
+│   ├── lib/           # Utility functions
+│   ├── store/         # Redux store setup
+│   └── styles/        # Tailwind + global CSS
+├── .env.example       # Example environment variables
+├── vite.config.ts     # Vite configuration
+└── package.json
