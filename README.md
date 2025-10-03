@@ -7,7 +7,186 @@ This software is trusted by thousands of businesses.
 
 ## 🚀 Features
 
+- **QR-Code Feedback** – Customers scan a code to share quick feedback.# The Gold Star
+
+A simple, **QR code–driven customer feedback system** that lets customers choose to share reviews **publicly or privately** — designed to be **transparent and Google-compliant**.  
+This software is trusted by thousands of businesses.
+
+---
+
+## 🚀 Features
+
 - **QR-Code Feedback** – Customers scan a code to share quick feedback.
+- **Public or Private Reviews** – Users can choose whether their feedback is visible publicly or sent privately to the business.
+- **Google-Compliant Publishing** – Fully compliant with Google’s review policies.
+- **Modern UI/UX** – Smooth animations with [Framer Motion](https://www.framer.com/motion/) and responsive layouts using [Tailwind CSS](https://tailwindcss.com/).
+- **Fast & Lightweight Frontend** – Built with [React + Vite](https://vitejs.dev/) for blazing-fast performance.
+- **Secure Backend** – [Express.js](https://expressjs.com/) API with SQL persistence.
+- **Admin Dashboard** – Manage reviews, view analytics, and moderate submissions.
+- **Scalable Deployment** – Hosted on [Vercel](https://vercel.com/).
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer          | Technology Used              |
+|----------------|------------------------------|
+| Frontend       | React (Vite), Tailwind CSS, Framer Motion |
+| Backend        | Express.js, REST APIs        |
+| Database       | SQL (Postgres/MySQL compatible) |
+| State & Forms  | React Hook Form, Zod, Redux Toolkit |
+| Routing        | React Router DOM             |
+| UI Components  | Radix-UI, Shadcn Components  |
+| Animations     | Framer Motion                |
+| Deployment     | Vercel                        |
+
+---
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repo-url>
+   cd vite_react_shadcn_tsInstall dependenciesnpm installSet up environment variables Create a .env file in the root directory and configure:DATABASE_URL=your_database_url
+API_KEY=your_api_key(Adjust as needed for your backend and third-party services.)
+3. Run the development servernpm run devBuild for productionnpm run buildPreview production build locallynpm run preview📂 Project Structurevite_react_shadcn_ts/
+├── public/            # Static assets
+├── src/
+│   ├── components/    # UI components
+│   ├── pages/         # Page-level components
+│   ├── hooks/         # Custom hooks
+│   ├── lib/           # Utility functions
+│   ├── store/         # Redux store setup
+│   └── styles/        # Tailwind + global CSS
+├── .env.example       # Example environment variables
+├── vite.config.ts     # Vite configuration
+└── package.json🌟 Scripts
+ScriptDescriptionnpm run devStart the development servernpm run buildBuild the project for productionnpm run previewPreview the production build locallynpm run lintRun ESLint to check code quality
+📝 Contributing
+Contributions are welcome! To contribute:
+1. Fork the repository.
+2. Create a new feature branch:git checkout -b feature/new-featureCommit your changes:git commit -m "Add new feature"Push the branch:git push origin feature/new-featureOpen a Pull Request.
+⚖️ License
+This project is licensed under the MIT License.
+🌐 LinksLive App: https://www.thegoldstar.ca/GitHub: Private repository — access by invitation only.
+💬 AcknowledgementsRadix-UI for robust accessible UI primitives.Framer Motion for smooth animations.Vercel for fast and reliable deployment.EditHere's the raw Markdown ready to copy-paste into your README.md:
+markdown# The Gold Star
+
+A simple, **QR code–driven customer feedback system** that lets customers choose to share reviews **publicly or privately** — designed to be **transparent and Google-compliant**.  
+This software is trusted by thousands of businesses.
+
+---
+
+## 🚀 Features
+
+- **QR-Code Feedback** – Customers scan a code to share quick feedback.
+- **Public or Private Reviews** – Users can choose whether their feedback is visible publicly or sent privately to the business.
+- **Google-Compliant Publishing** – Fully compliant with Google's review policies.
+- **Modern UI/UX** – Smooth animations with [Framer Motion](https://www.framer.com/motion/) and responsive layouts using [Tailwind CSS](https://tailwindcss.com/).
+- **Fast & Lightweight Frontend** – Built with [React + Vite](https://vitejs.dev/) for blazing-fast performance.
+- **Secure Backend** – [Express.js](https://expressjs.com/) API with SQL persistence.
+- **Admin Dashboard** – Manage reviews, view analytics, and moderate submissions.
+- **Scalable Deployment** – Hosted on [Vercel](https://vercel.com/).
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer          | Technology Used              |
+|----------------|------------------------------|
+| Frontend       | React (Vite), Tailwind CSS, Framer Motion |
+| Backend        | Express.js, REST APIs        |
+| Database       | SQL (Postgres/MySQL compatible) |
+| State & Forms  | React Hook Form, Zod, Redux Toolkit |
+| Routing        | React Router DOM             |
+| UI Components  | Radix-UI, Shadcn Components  |
+| Animations     | Framer Motion                |
+| Deployment     | Vercel                        |
+
+---
+
+## 📦 Installation
+
+1. **Clone the repository**
+```bash
+   git clone <repo-url>
+   cd vite_react_shadcn_ts
+
+Install dependencies
+
+bash   npm install
+
+Set up environment variables
+Create a .env file in the root directory and configure:
+
+   DATABASE_URL=your_database_url
+   API_KEY=your_api_key
+(Adjust as needed for your backend and third-party services.)
+
+Run the development server
+
+bash   npm run dev
+
+Build for production
+
+bash   npm run build
+
+Preview production build locally
+
+bash   npm run preview
+
+📂 Project Structure
+vite_react_shadcn_ts/
+├── public/            # Static assets
+├── src/
+│   ├── components/    # UI components
+│   ├── pages/         # Page-level components
+│   ├── hooks/         # Custom hooks
+│   ├── lib/           # Utility functions
+│   ├── store/         # Redux store setup
+│   └── styles/        # Tailwind + global CSS
+├── .env.example       # Example environment variables
+├── vite.config.ts     # Vite configuration
+└── package.json
+
+🌟 Scripts
+ScriptDescriptionnpm run devStart the development servernpm run buildBuild the project for productionnpm run previewPreview the production build locallynpm run lintRun ESLint to check code quality
+
+📝 Contributing
+Contributions are welcome! To contribute:
+
+Fork the repository.
+Create a new feature branch:
+
+bash   git checkout -b feature/new-feature
+
+Commit your changes:
+
+bash   git commit -m "Add new feature"
+
+Push the branch:
+
+bash   git push origin feature/new-feature
+
+Open a Pull Request.
+
+
+⚖️ License
+This project is licensed under the MIT License.
+
+🌐 Links
+
+Live App: https://www.thegoldstar.ca/
+GitHub: Private repository — access by invitation only.
+
+
+💬 Acknowledgements
+
+Radix-UI for robust accessible UI primitives.
+Framer Motion for smooth animations.
+Vercel for fast and reliable deployment.
+
+
 - **Public or Private Reviews** – Users can choose whether their feedback is visible publicly or sent privately to the business.
 - **Google-Compliant Publishing** – Fully compliant with Google’s review policies.
 - **Modern UI/UX** – Smooth animations with [Framer Motion](https://www.framer.com/motion/) and responsive layouts using [Tailwind CSS](https://tailwindcss.com/).
